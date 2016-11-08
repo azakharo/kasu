@@ -35,7 +35,7 @@ angular.module('projectsApp')
       L.marker(e.latlng, {icon: yoIcon}).addTo(mymap)
         .bindPopup("Вы в пределах " + radius + " метров от этой точки");
 
-      L.circle(e.latlng, radius * 2).addTo(mymap);
+      L.circle(e.latlng, radius).addTo(mymap);
     }
     mymap.on('locationfound', onLocationFound);
 
