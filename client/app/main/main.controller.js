@@ -22,7 +22,7 @@ angular.module('projectsApp')
       iconUrl: 'assets/images/yeoman.png',
       //shadowUrl: 'leaf-shadow.png',
 
-      iconSize:     [103, 89] // size of the icon
+      iconSize:     [32, 32] // size of the icon
       //shadowSize:   [50, 64], // size of the shadow
       //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
       //shadowAnchor: [4, 62],  // the same for the shadow
@@ -35,7 +35,7 @@ angular.module('projectsApp')
       L.marker(e.latlng, {icon: yoIcon}).addTo(mymap)
         .bindPopup("Вы в пределах " + radius + " метров от этой точки");
 
-      L.circle(e.latlng, radius).addTo(mymap);
+      L.circle(e.latlng, radius * 2).addTo(mymap);
     }
     mymap.on('locationfound', onLocationFound);
 
@@ -47,7 +47,8 @@ angular.module('projectsApp')
     function drawMap(location) {
       let mapOptions = {
         zoom: 13,
-        attributionControl: false
+        attributionControl: false,
+        preferCanvas: true
       };
       if (location) {
         mapOptions.center = [location.lat, location.lon];
