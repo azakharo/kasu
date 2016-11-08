@@ -17,7 +17,11 @@ angular.module('projectsApp')
     // Implementation
 
     function drawMap(location) {
-      mymap = L.map('my-map').setView([location.lat, location.lon], 13);
+      mymap = L.map($('.my-map')[0], {
+        center: [location.lat, location.lon],
+        zoom: 13,
+        attributionControl: false
+      });
 
       L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         //attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
