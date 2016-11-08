@@ -18,10 +18,21 @@ angular.module('projectsApp')
     ////////////////////////////////////////////////
     // Implementation
 
+    var yoIcon = L.icon({
+      iconUrl: 'assets/images/yeoman.png',
+      //shadowUrl: 'leaf-shadow.png',
+
+      iconSize:     [103, 89] // size of the icon
+      //shadowSize:   [50, 64], // size of the shadow
+      //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+      //shadowAnchor: [4, 62],  // the same for the shadow
+      //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+
     function onLocationFound(e) {
       var radius = e.accuracy / 2;
 
-      L.marker(e.latlng).addTo(mymap)
+      L.marker(e.latlng, {icon: yoIcon}).addTo(mymap)
         .bindPopup("Вы в пределах " + radius + " метров от этой точки");
 
       L.circle(e.latlng, radius).addTo(mymap);
