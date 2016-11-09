@@ -170,22 +170,43 @@ angular.module('projectsApp')
       });
     }
 
-    function createPowerPoints() {
-      const powerPlaceStyle = {
-        "color": "#ff7800",
-        "weight": 5,
-        "opacity": 0.65
-      };
 
+    //////////////////////////////////////////////////
+    // Power places
+
+    function getPowerColor(p) {
+      if (p < 30) {
+        return "#fee0d2";
+      }
+      else if (p >= 30 && p <= 60) {
+        return "#fc9272"
+      }
+      else {
+        return "#de2d26"
+      }
+    }
+
+    function getPowerPlaceStyle(feature) {
+      return {
+        fillColor: getPowerColor(feature.properties.power),
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+      };
+    }
+
+    function createPowerPoints() {
       const powerPlaces = [
         {
           "type": "Feature",
+          "properties": {
+            "name": "Старый Фонтан",
+            "power": "99"
+          },
           "geometry": {
             "type": "Polygon",
-            "properties": {
-              "name": "Старый Фонтан",
-              "power": "99"
-            },
             "coordinates": [[
               [43.340415, 54.924501],
               [43.339686, 54.923117],
@@ -200,12 +221,12 @@ angular.module('projectsApp')
         },
         {
           "type": "Feature",
+          "properties": {
+            "name": "Лыжная база",
+            "power": "55"
+          },
           "geometry": {
             "type": "Polygon",
-            "properties": {
-              "name": "Лыжная база",
-              "power": "80"
-            },
             "coordinates": [[
               [43.347799, 54.936358],
               [43.348218, 54.93755],
@@ -221,12 +242,12 @@ angular.module('projectsApp')
         },
         {
           "type": "Feature",
+          "properties": {
+            "name": "Протяжка",
+            "power": "45"
+          },
           "geometry": {
             "type": "Polygon",
-            "properties": {
-              "name": "Протяжка",
-              "power": "90"
-            },
             "coordinates": [[
               [43.441994, 54.878620],
               [43.440213, 54.876146],
@@ -240,7 +261,7 @@ angular.module('projectsApp')
         }
       ];
 
-      return L.geoJSON(powerPlaces, {style: powerPlaceStyle});
+      return L.geoJSON(powerPlaces, {style: getPowerPlaceStyle});
     }
 
     // GeoJSON layers
