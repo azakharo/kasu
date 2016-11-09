@@ -46,6 +46,8 @@ angular.module('projectsApp')
         .bindPopup("Вы в пределах " + radius + " метров от этой точки");
 
       L.circle(e.latlng, radius).addTo(mymap);
+
+      drawTechnoparkBoundaries();
     }
     mymap.on('locationfound', onLocationFound);
 
@@ -85,5 +87,41 @@ angular.module('projectsApp')
         marker.bindPopup("<b>Привет!</b><br>Я здесь!");
       }
     }
+
+    //===========================================
+    // GeoJSON layers
+
+    function drawTechnoparkBoundaries() {
+      const technoparkBoundariesStyle = {
+        "color": "#ff7800",
+        "weight": 5,
+        "opacity": 0.65
+      };
+
+      const technoparkBoundaries = [{
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [[
+            [43.225957, 54.930522],
+            [43.220378, 54.931276],
+            [43.219262, 54.928464],
+            [43.222953, 54.927982],
+            [43.222845, 54.927674],
+            [43.223586, 54.927556],
+            [43.223843, 54.928026],
+            [43.225898, 54.927777],
+            [43.227099, 54.929722],
+            [43.22608,  54.930488]
+          ]]
+        }
+      }];
+
+      L.geoJSON(technoparkBoundaries, {style: technoparkBoundariesStyle}).addTo(mymap);
+    }
+
+    // GeoJSON layers
+    //===========================================
+
 
   });
