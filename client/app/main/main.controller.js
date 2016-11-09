@@ -15,7 +15,7 @@ angular.module('projectsApp')
     //drawMarker(LOCATION);
 
     drawMap(null);
-    mymap.locate({setView: true, maxZoom: 16});
+    mymap.locate({setView: true, maxZoom: 11});
 
     // Start up code
     //*******************************************
@@ -76,15 +76,15 @@ angular.module('projectsApp')
       }).addTo(mymap);
     }
 
-    function drawMarker(location) {
-      let marker = null;
-      if (mymap) {
-        marker = L.marker([location.lat, location.lon], {
-          title: "я здесь"
-        }).addTo(mymap);
-        marker.bindPopup("<b>Привет!</b><br>Я здесь!");
-      }
-    }
+    //function drawMarker(location) {
+    //  let marker = null;
+    //  if (mymap) {
+    //    marker = L.marker([location.lat, location.lon], {
+    //      title: "я здесь"
+    //    }).addTo(mymap);
+    //    marker.bindPopup("<b>Привет!</b><br>Я здесь!");
+    //  }
+    //}
 
     //===========================================
     // GeoJSON layers
@@ -119,6 +119,68 @@ angular.module('projectsApp')
     }
 
     drawTechnoparkBoundaries();
+
+    ////////////////////////////////////////
+    // Грибные места
+
+    const mushroomPoints = [
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Рядом с Технопарком"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [43.195033, 54.928212]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Рядом с Колхозным Рынком"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [43.375642, 54.748849]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Под Бахтызино"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [42.843923, 54.84816]
+        }
+      }
+    ];
+
+    // Mushroom icon
+    var iconMushroom = L.icon({
+      iconUrl: 'assets/images/mushroom.png',
+
+      iconSize:     [32, 32] // size of the icon
+      //shadowSize:   [50, 64], // size of the shadow
+      //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+      //shadowAnchor: [4, 62],  // the same for the shadow
+      //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+
+    L.geoJSON(mushroomPoints, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {icon: iconMushroom}).bindPopup("<i>" + feature.properties.name + "</i>")
+          .on('mouseover', function (e) {
+            e.target.openPopup();
+          })
+          .on('mouseout', function (e) {
+            e.target.closePopup();
+          });
+      }
+    }).addTo(mymap);
+
+    // Грибные места
+    ////////////////////////////////////////
 
     // GeoJSON layers
     //===========================================
