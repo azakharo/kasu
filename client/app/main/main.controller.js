@@ -107,6 +107,10 @@ angular.module('projectsApp')
       // Power places info control
       powerInfo = createPowerPlaceInfo();
       powerInfo.addTo(mymap);
+
+      // Power legend
+      let powerLegend = createPowerPlacesLegend();
+      powerLegend.addTo(mymap);
     }
 
     //function drawMarker(location) {
@@ -308,7 +312,7 @@ angular.module('projectsApp')
     }
 
     function createPowerPlaceInfo() {
-      var info = L.control();
+      let info = L.control();
 
       info.onAdd = function () {
         this._div = L.DomUtil.create('div', 'power-info'); // create a div with a class "info"
@@ -324,6 +328,29 @@ angular.module('projectsApp')
       };
 
       return info;
+    }
+
+    function createPowerPlacesLegend() {
+      let legend = L.control({position: 'bottomright'});
+
+      legend.onAdd = function() {
+
+        var div = L.DomUtil.create('div', 'power-info power-legend'),
+          grades = [0, 30, 60],
+          labels = [];
+
+        div.innerHTML += "<b>Мощность</b><br><p></p>";
+        // loop through our density intervals and generate a label with a colored square for each interval
+        for (var i = 0; i < grades.length; i++) {
+          div.innerHTML +=
+            '<i style="background:' + getPowerColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+        }
+
+        return div;
+      };
+
+      return legend;
     }
 
     // GeoJSON layers
