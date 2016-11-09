@@ -46,8 +46,6 @@ angular.module('projectsApp')
         .bindPopup("Вы в пределах " + radius + " метров от этой точки");
 
       L.circle(e.latlng, radius).addTo(mymap);
-
-      drawTechnoparkBoundaries();
     }
     mymap.on('locationfound', onLocationFound);
 
@@ -119,6 +117,8 @@ angular.module('projectsApp')
 
       L.geoJSON(technoparkBoundaries, {style: technoparkBoundariesStyle}).addTo(mymap);
     }
+
+    drawTechnoparkBoundaries();
 
     // GeoJSON layers
     //===========================================
