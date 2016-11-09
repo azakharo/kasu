@@ -7,6 +7,7 @@ angular.module('projectsApp')
     // Start up code
 
     let mymap = null;
+    let powerPoints = null;
     //const LOCATION = {
     //  lat: 55.745737,
     //  lon: 37.660808
@@ -84,7 +85,7 @@ angular.module('projectsApp')
 
       // Overlays
       let mushrooms = createMushrooms();
-      let powerPoints = createPowerPoints();
+      powerPoints = createPowerPoints();
 
       // Create map
       mapOptions.layers = [streetTiles, mushrooms, powerPoints];
@@ -197,6 +198,37 @@ angular.module('projectsApp')
       };
     }
 
+    function highlightPowerPlace(e) {
+      var layer = e.target;
+
+      layer.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+      });
+
+      if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+      }
+    }
+
+    function resetPowerPlaces(e) {
+      powerPoints.resetStyle(e.target);
+    }
+
+    function zoom2powerPlace(e) {
+      mymap.fitBounds(e.target.getBounds());
+    }
+
+    function onEachPowerPlace(feature, layer) {
+      layer.on({
+        mouseover: highlightPowerPlace,
+        mouseout: resetPowerPlaces,
+        click: zoom2powerPlace
+      });
+    }
+
     function createPowerPoints() {
       const powerPlaces = [
         {
@@ -261,7 +293,10 @@ angular.module('projectsApp')
         }
       ];
 
-      return L.geoJSON(powerPlaces, {style: getPowerPlaceStyle});
+      return L.geoJSON(powerPlaces, {
+        style: getPowerPlaceStyle,
+        onEachFeature: onEachPowerPlace
+      });
     }
 
     // GeoJSON layers
