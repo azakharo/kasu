@@ -8,6 +8,7 @@ angular.module('projectsApp')
 
     let mymap = null;
     let powerPoints = null;
+    let powerInfo = null;
     //const LOCATION = {
     //  lat: 55.745737,
     //  lon: 37.660808
@@ -102,6 +103,10 @@ angular.module('projectsApp')
         "Места силы": powerPoints
       };
       L.control.layers(baseMaps, overlayMaps).addTo(mymap);
+
+      // Power places info control
+      powerInfo = createPowerPlaceInfo();
+      powerInfo.addTo(mymap);
     }
 
     //function drawMarker(location) {
@@ -211,10 +216,13 @@ angular.module('projectsApp')
       if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
       }
+
+      powerInfo.update(layer.feature.properties);
     }
 
     function resetPowerPlaces(e) {
       powerPoints.resetStyle(e.target);
+      powerInfo.update();
     }
 
     function zoom2powerPlace(e) {
@@ -297,6 +305,25 @@ angular.module('projectsApp')
         style: getPowerPlaceStyle,
         onEachFeature: onEachPowerPlace
       });
+    }
+
+    function createPowerPlaceInfo() {
+      var info = L.control();
+
+      info.onAdd = function () {
+        this._div = L.DomUtil.create('div', 'power-info'); // create a div with a class "info"
+        this.update();
+        return this._div;
+      };
+
+      // method that we will use to update the control based on feature properties passed
+      info.update = function (props) {
+        this._div.innerHTML = '<h4>Мощность места силы</h4>' +  (props ?
+        '<b>' + props.name + '</b> ' + props.power + '%'
+          : 'Выберите место силы');
+      };
+
+      return info;
     }
 
     // GeoJSON layers
