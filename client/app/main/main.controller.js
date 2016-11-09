@@ -3,6 +3,9 @@
 angular.module('projectsApp')
   .controller('MainCtrl', function ($scope) {
 
+    //*******************************************
+    // Start up code
+
     let mymap = null;
     //const LOCATION = {
     //  lat: 55.745737,
@@ -14,10 +17,14 @@ angular.module('projectsApp')
     drawMap(null);
     mymap.locate({setView: true, maxZoom: 16});
 
+    // Start up code
+    //*******************************************
+
 
     ////////////////////////////////////////////////
     // Implementation
 
+    // Custom marker icon
     var yoIcon = L.icon({
       iconUrl: 'assets/images/yeoman.png',
       //shadowUrl: 'leaf-shadow.png',
@@ -28,6 +35,9 @@ angular.module('projectsApp')
       //shadowAnchor: [4, 62],  // the same for the shadow
       //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
+
+    //======================================
+    // Location detection
 
     function onLocationFound(e) {
       var radius = e.accuracy / 2;
@@ -43,6 +53,9 @@ angular.module('projectsApp')
       alert(e.message);
     }
     mymap.on('locationerror', onLocationError);
+
+    // Location detection
+    //======================================
 
     function drawMap(location) {
       let mapOptions = {
