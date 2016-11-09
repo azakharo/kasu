@@ -312,7 +312,7 @@ angular.module('projectsApp')
     }
 
     function createPowerPlaceInfo() {
-      let info = L.control();
+      let info = L.control({position: 'bottomright'});
 
       info.onAdd = function () {
         this._div = L.DomUtil.create('div', 'power-info'); // create a div with a class "info"
