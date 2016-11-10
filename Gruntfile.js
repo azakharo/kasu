@@ -16,11 +16,17 @@ module.exports = function (grunt) {
     ngtemplates: 'grunt-angular-templates',
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
-    buildcontrol: 'grunt-build-control'
+    buildcontrol: 'grunt-build-control',
+    replace: 'grunt-text-replace'
   });
 
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
+
+  var replUrlLeafletImg = {
+    from: 'url(images',
+    to: 'url(/bower_components/leaflet/dist/images'
+  };
 
   // Define the configuration for all the tasks
   grunt.initConfig({
@@ -604,6 +610,17 @@ module.exports = function (grunt) {
         }
       }
     },
+
+    replace: {
+      urlLeafletImg: {
+        src: [
+          'dist/public/app/*.vendor.css'
+        ],
+        overwrite: true,
+        replacements: [replUrlLeafletImg]
+      }
+    }
+
   });
 
   // Used for delaying livereload until after server has restarted
@@ -718,7 +735,8 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'usemin'
+    'usemin',
+    'replace:urlLeafletImg'
   ]);
 
   grunt.registerTask('default', [
