@@ -9,10 +9,10 @@ angular.module('projectsApp')
     let mymap = null;
     let powerPoints = null;
     let powerInfo = null;
-    //const LOCATION = {
-    //  lat: 55.745737,
-    //  lon: 37.660808
-    //};
+    const DEFAULT_LOCATION = {
+      lat: 54.928835,
+      lon: 43.222835
+    };
     //drawMap(LOCATION);
     //drawMarker(LOCATION);
 
@@ -52,6 +52,7 @@ angular.module('projectsApp')
     mymap.on('locationfound', onLocationFound);
 
     function onLocationError(e) {
+      mymap.setView(DEFAULT_LOCATION, 11);
       alert(e.message);
     }
     mymap.on('locationerror', onLocationError);
