@@ -13,11 +13,10 @@ angular.module('projectsApp')
       lat: 54.928835,
       lon: 43.222835
     };
-    //drawMap(LOCATION);
-    //drawMarker(LOCATION);
+    const DEFAULT_ZOOM = 11;
 
-    drawMap(null);
-    mymap.locate({setView: true, maxZoom: 11});
+    drawMap(DEFAULT_LOCATION);
+    mymap.locate({setView: true, maxZoom: DEFAULT_ZOOM});
 
     // Start up code
     //*******************************************
@@ -52,7 +51,7 @@ angular.module('projectsApp')
     mymap.on('locationfound', onLocationFound);
 
     function onLocationError(e) {
-      mymap.setView(DEFAULT_LOCATION, 11);
+      mymap.setView(DEFAULT_LOCATION, DEFAULT_ZOOM);
       alert(e.message);
     }
     mymap.on('locationerror', onLocationError);
@@ -62,7 +61,7 @@ angular.module('projectsApp')
 
     function drawMap(location) {
       let mapOptions = {
-        zoom: 13,
+        zoom: DEFAULT_ZOOM,
         attributionControl: false,
         preferCanvas: true
       };
