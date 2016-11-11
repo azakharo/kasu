@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('projectsApp')
-  .controller('MapCtrl', function ($scope) {
+  .controller('MapCtrl', function ($scope, $timeout) {
     //*******************************************
     // Start up code
 
@@ -354,4 +354,12 @@ angular.module('projectsApp')
 
     // GeoJSON layers
     //===========================================
+
+    $scope.$watch('sidebarToggle', function () {
+      $timeout(function () {
+        if ($("#wrapper").hasClass("toggled")) {
+          mymap.invalidateSize();
+        }
+      }, 600);
+    });
   });

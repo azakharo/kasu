@@ -1,15 +1,12 @@
 'use strict';
 
 angular.module('projectsApp')
-  .controller('MainCtrl', function ($scope, $timeout) {
+  .controller('MainCtrl', function ($scope) {
+    $scope.sidebarToggle = 0;
 
     $scope.onSidebarToggleClick = function () {
       $("#wrapper").toggleClass("toggled");
-      $timeout(function () {
-        if ($("#wrapper").hasClass("toggled")) {
-          mymap.invalidateSize();
-        }
-      }, 600);
+      $scope.sidebarToggle += 1;
     };
 
   });
