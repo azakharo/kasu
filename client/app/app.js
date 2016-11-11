@@ -8,10 +8,7 @@ angular.module('projectsApp', [
   'ui.router',
   'ui.bootstrap'
 ])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
-    $urlRouterProvider
-      .otherwise('/');
-
+  .config(function ($locationProvider, $httpProvider) {
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
 
@@ -29,7 +26,6 @@ angular.module('projectsApp', [
         return data;
       }
     };
-
   })
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
