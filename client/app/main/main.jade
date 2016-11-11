@@ -37,7 +37,7 @@
         form.navbar-form.navbar-left
           .form-group
             input.form-control(type='text', placeholder='Search')
-          button.btn.btn-info(type='submit') Submit
+          button.btn.btn-info(type='submit', ng-click="onSidebarToggleClick()") Submit
         ul.nav.navbar-nav.navbar-right
           li
             a(href='#') Link3
@@ -55,8 +55,30 @@
               li.divider(role='separator')
               li
                 a(href='#') Separated link
-
-  // Map
-  .my-map.vw100
+  // Main content area
+  .content-container#wrapper
+    // Sidebar
+    #sidebar-wrapper
+      ul.sidebar-nav
+        li.sidebar-brand
+          a(href='#') Start Bootstrap
+        li
+          a(href='#') Dashboard
+        li
+          a(href='#') Shortcuts
+        li
+          a(href='#') Overview
+        li
+          a(href='#') Events
+        li
+          a(href='#') About
+        li
+          a(href='#') Services
+        li
+          a(href='#') Contact
+    // Page Content
+    #page-content-wrapper.h100
+      // Map
+      .my-map.w100.h100
   footer.my-footer.text-center Copyright &copy; 2015-2016 &mdash;&nbsp;
     a(href="http://sarov-itc.ru/", target="_blank") ИТЦ Система-Саров
