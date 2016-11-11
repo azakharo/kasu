@@ -11,7 +11,7 @@
           span.icon-bar
         button.sidebar-toggle.btn.btn-default.responsive-btn.mr2(ng-click="onSidebarToggleClick()")
           i.fa.fa-bars
-        a.navbar-brand(href='#')
+        a.navbar-brand(href='http://sarov-itc.ru/', target="_blank")
           img(src="assets/images/logo.png", alt="лого")
       // Collect the nav links, forms, and other content for toggling
       #bs-example-navbar-collapse-1.collapse.navbar-collapse
@@ -63,21 +63,11 @@
     #sidebar-wrapper
       ul.sidebar-nav
         li.sidebar-brand
-          a(href='#') Start Bootstrap
-        li
-          a(href='#') Dashboard
-        li
-          a(href='#') Shortcuts
-        li
-          a(href='#') Overview
-        li
-          a(href='#') Events
-        li
-          a(href='#') About
-        li
-          a(href='#') Services
-        li
-          a(href='#') Contact
+          a(href='#') Меню:
+        li(ui-sref-active="active")
+          a(ui-sref='main.map') Карта
+        li(ui-sref-active="active")
+          a(ui-sref='main.test') Тест
     // Page Content
     #page-content-wrapper.h100
       // Main Content
