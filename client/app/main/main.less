@@ -1,9 +1,17 @@
+.main-container {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
 /////////////////////////////////////////////////
 // navbar
 
 .my-navbar {
   margin-bottom: 0 !important;
   border-radius: 0 !important;
+  flex: none;
 }
 
 // navbar
@@ -14,7 +22,8 @@
 // Map
 
 .my-map {
-  height: 800px;
+  min-height: 400px;
+  flex: 1;
 }
 
 .power-info {
