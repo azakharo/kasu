@@ -18,6 +18,11 @@ angular.module('projectsApp').config(['$stateProvider', '$urlRouterProvider',
         url: '/map',
         templateUrl: 'app/map/map.html',
         controller: 'MapCtrl'
+      })
+      .state('main.test', {
+        url: '/test',
+        templateUrl: 'app/test/test.html',
+        controller: 'TestCtrl'
       });
   }
 ]);
