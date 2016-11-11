@@ -9,6 +9,8 @@
           span.icon-bar
           span.icon-bar
           span.icon-bar
+        button.sidebar-toggle.btn.btn-default.responsive-btn.mr2.mt1(ng-click="onSidebarToggleClick()")
+          i.fa.fa-bars
         a.navbar-brand(href='#') Brand
       // Collect the nav links, forms, and other content for toggling
       #bs-example-navbar-collapse-1.collapse.navbar-collapse
@@ -37,7 +39,6 @@
         form.navbar-form.navbar-left
           .form-group
             input.form-control(type='text', placeholder='Search')
-          button.btn.btn-info(type='submit', ng-click="onSidebarToggleClick()") Submit
         ul.nav.navbar-nav.navbar-right
           li
             a(href='#') Link3
