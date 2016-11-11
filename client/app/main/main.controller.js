@@ -9,4 +9,15 @@ angular.module('projectsApp')
       $scope.sidebarToggle += 1;
     };
 
+    $scope.sidebarItems = [
+      {
+        state: 'main.map',
+        title: 'Карта'
+      },
+      {
+        state: 'main.test',
+        title: 'Тест'
+      }
+    ];
+
   });

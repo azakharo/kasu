@@ -64,10 +64,8 @@
       ul.sidebar-nav
         li.sidebar-brand
           a(href='#') Меню:
-        li(ui-sref-active="active")
-          a(ui-sref='main.map') Карта
-        li(ui-sref-active="active")
-          a(ui-sref='main.test') Тест
+        li(ng-repeat="item in sidebarItems")
+          a(ui-sref='{{item.state}}', ui-sref-active="active") {{item.title}}
     // Page Content
     #page-content-wrapper.h100
       // Main Content
