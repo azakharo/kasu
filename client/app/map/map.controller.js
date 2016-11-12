@@ -357,9 +357,7 @@ angular.module('projectsApp')
 
     $scope.$watch('sidebarToggle', function () {
       $timeout(function () {
-        if ($("#wrapper").hasClass("toggled")) {
-          mymap.invalidateSize();
-        }
+        mymap.invalidateSize();
       }, 600);
     });
   });
