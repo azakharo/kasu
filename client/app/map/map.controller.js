@@ -110,6 +110,10 @@ angular.module('projectsApp')
       // Power legend
       let powerLegend = createPowerPlacesLegend();
       powerLegend.addTo(mymap);
+
+      $timeout(function () {
+        mymap.invalidateSize();
+      }, 100);
     }
 
     //function drawMarker(location) {
