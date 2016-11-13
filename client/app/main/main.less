@@ -3,6 +3,7 @@
   flex-flow: column nowrap;
   align-items: stretch;
   justify-content: flex-start;
+  background: #000000;
 }
 
 /////////////////////////////////////////////////
@@ -67,6 +68,14 @@ a.navbar-brand {
 
   overflow-y: auto;
   background: #000;
+}
+
+.sidebar-container.ng-hide-add {
+  animation: 0.5s slideOutLeft ease;
+}
+
+.sidebar-container.ng-hide-remove {
+  animation: 0.5s slideInLeft ease;
 }
 
 .page-content-container {
