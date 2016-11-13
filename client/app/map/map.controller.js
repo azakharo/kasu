@@ -326,8 +326,8 @@ angular.module('projectsApp')
       // method that we will use to update the control based on feature properties passed
       info.update = function (props) {
         this._div.innerHTML = '<h4>Мощность места силы</h4>' +  (props ?
-        '<b>' + props.name + '</b> ' + props.power + '%'
-          : 'Выберите место силы');
+        '<span><b>' + props.name + '</b> ' + props.power + '%</span>'
+          : '<span>Выберите место силы</span>');
       };
 
       return info;
