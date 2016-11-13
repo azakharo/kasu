@@ -58,17 +58,15 @@
               li
                 a(href='#') Separated link
   // Main content area
-  .content-container#wrapper
+  .content-container
     // Sidebar
-    #sidebar-wrapper
+    .sidebar-container(ng-show="showSidebar")
       ul.sidebar-nav
         li.sidebar-brand
           a(href='#') Меню:
         li(ng-repeat="item in sidebarItems")
           a(ui-sref='{{item.state}}', ui-sref-active="active") {{item.title}}
     // Page Content
-    #page-content-wrapper.h100
-      // Main Content
-      div(ui-view='').w100.h100
+    .page-content-container(ui-view='')
   footer.my-footer.text-center Copyright &copy; 2015-2016 &mdash;&nbsp;
     a(href="http://sarov-itc.ru/", target="_blank") ИТЦ Система-Саров

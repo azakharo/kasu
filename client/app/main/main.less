@@ -54,6 +54,23 @@ a.navbar-brand {
 .content-container {
   min-height: 400px;
   flex: 1;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.sidebar-container {
+  flex: none;
+  width: 250px;
+
+  overflow-y: auto;
+  background: #000;
+}
+
+.page-content-container {
+  flex: 1;
 }
 
 .my-footer {

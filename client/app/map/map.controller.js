@@ -355,9 +355,12 @@ angular.module('projectsApp')
     // GeoJSON layers
     //===========================================
 
-    $scope.$watch('sidebarToggle', function () {
+    $scope.$watch('showSidebar', function (newVal) {
       $timeout(function () {
-        mymap.invalidateSize();
+        if (!newVal) {
+          mymap.invalidateSize();
+        }
       }, 600);
     });
+
   });

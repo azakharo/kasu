@@ -2,11 +2,10 @@
 
 angular.module('projectsApp')
   .controller('MainCtrl', function ($scope) {
-    $scope.sidebarToggle = 0;
+    $scope.showSidebar = window.innerWidth >= 768;
 
     $scope.onSidebarToggleClick = function () {
-      $("#wrapper").toggleClass("toggled");
-      $scope.sidebarToggle += 1;
+      $scope.showSidebar = !$scope.showSidebar;
     };
 
     $scope.sidebarItems = [
