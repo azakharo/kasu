@@ -65,7 +65,7 @@
         li.sidebar-brand
           a(href='#') Меню:
         li(ng-repeat="item in sidebarItems")
-          a(ui-sref='{{item.state}}', ui-sref-active="active") {{item.title}}
+          a(ui-sref='{{item.state}}', ui-sref-active="active", ng-click="animateBrand()") {{item.title}}
     // Page Content
     .page-content-container(ui-view='')
   footer.my-footer.text-center Copyright &copy; 2015-2016 &mdash;&nbsp;
