@@ -368,20 +368,29 @@ angular.module('projectsApp')
     });
 
     let browserInfo = getBrowserInfo();
-    if (browserInfo && browserInfo.name && /safary/i.test(browserInfo.name)) {
+    if (/^safari$/i.test(browserInfo.name)) {
       // If this is Safari
-      $timeout(function () {
-        resizeMap();
-      }, 700);
+      $timeout(resizeMap, 700);
 
       var onWindowResize = debounce(resizeMap, 1000);
       $(window).resize(onWindowResize);
     }
 
     function resizeMap() {
-      let mapH = window.innerHeight - $('.my-navbar').height() - $('.my-footer').height();
+      let wndH = window.innerHeight;
+      let hdrH = $('.my-navbar').height();
+      let footerH = $('.my-footer').height();
+      let mapH = wndH - hdrH;
+      $('.main-container').height(wndH);
+      $('.content-container').height(mapH);
+      $('.page-content-container').height(mapH);
       $('.my-map').height(mapH);
       mymap.invalidateSize();
+      //let msg = `
+      //wndH = ${wndH}
+      //navbarH = ${hdrH}
+      //footerH = ${footerH}`;
+      //alert(msg);
     }
 
   });
