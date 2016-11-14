@@ -367,4 +367,21 @@ angular.module('projectsApp')
       }, 600);
     });
 
+    let browserInfo = getBrowserInfo();
+    if (browserInfo && browserInfo.name && /safary/i.test(browserInfo.name)) {
+      // If this is Safari
+      $timeout(function () {
+        resizeMap();
+      }, 700);
+
+      var onWindowResize = debounce(resizeMap, 1000);
+      $(window).resize(onWindowResize);
+    }
+
+    function resizeMap() {
+      let mapH = window.innerHeight - $('.my-navbar').height() - $('.my-footer').height();
+      $('.my-map').height(mapH);
+      mymap.invalidateSize();
+    }
+
   });
