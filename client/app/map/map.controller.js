@@ -359,6 +359,9 @@ angular.module('projectsApp')
     // GeoJSON layers
     //===========================================
 
+
+    // WORKAROUND
+    // The map is not re-drawn when the sidebar has been hidden (gray area remains)
     $scope.$watch('showSidebar', function (newVal) {
       $timeout(function () {
         if (!newVal) {
@@ -366,6 +369,10 @@ angular.module('projectsApp')
         }
       }, 600);
     });
+
+
+    /////////////////////////////////////////////////////////////////
+    // Map Height issue in Safari
 
     let browserInfo = getBrowserInfo();
     if (/^safari$/i.test(browserInfo.name)) {
@@ -392,5 +399,8 @@ angular.module('projectsApp')
       //footerH = ${footerH}`;
       //alert(msg);
     }
+
+    // Map Height issue in Safari
+    /////////////////////////////////////////////////////////////////
 
   });
