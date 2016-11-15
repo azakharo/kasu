@@ -102,7 +102,7 @@ angular.module('projectsApp')
         //"Грибные места": mushrooms,
         //"Места силы": powerPoints
       };
-      L.control.layers(baseMaps, overlayMaps).addTo(mymap);
+      let layersCtrl = L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 
       // Power places info control
       //powerInfo = createPowerPlaceInfo();
@@ -116,7 +116,7 @@ angular.module('projectsApp')
         mymap.invalidateSize();
       }, 100);
 
-      createLayers(mymap);
+      createLayers(mymap, layersCtrl);
     }
 
     //function drawMarker(location) {
@@ -359,14 +359,14 @@ angular.module('projectsApp')
     //  return legend;
     //}
 
-    function createLayers(map) {
+    function createLayers(map, layersCtrl) {
       //log('create layers');
       $http.get('/api/layers').success(
         function (layersData) {
           _.forEach(layersData, function (data) {
             const layerName = data.name;
             const layerGeoJson = JSON.parse(data.geojson);
-            let l = L.geoJSON(layerGeoJson, {
+            let layer = L.geoJSON(layerGeoJson, {
               onEachFeature: function (feature, layer) {
                 layer.bindPopup("<i>" + feature.properties.name + "</i>");
                 layer.on({
@@ -379,7 +379,8 @@ angular.module('projectsApp')
                 });
               }
             });
-            l.addTo(map);
+            layer.addTo(map);
+            layersCtrl.addOverlay(layer, layerName);
           })
         }
       );
