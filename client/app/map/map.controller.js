@@ -104,12 +104,12 @@ angular.module('projectsApp')
       L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 
       // Power places info control
-      powerInfo = createPowerPlaceInfo();
-      powerInfo.addTo(mymap);
+      //powerInfo = createPowerPlaceInfo();
+      //powerInfo.addTo(mymap);
 
       // Power legend
-      let powerLegend = createPowerPlacesLegend();
-      powerLegend.addTo(mymap);
+      //let powerLegend = createPowerPlacesLegend();
+      //powerLegend.addTo(mymap);
 
       $timeout(function () {
         mymap.invalidateSize();
@@ -314,47 +314,47 @@ angular.module('projectsApp')
       });
     }
 
-    function createPowerPlaceInfo() {
-      let info = L.control({position: 'bottomright'});
+    //function createPowerPlaceInfo() {
+    //  let info = L.control({position: 'bottomright'});
+    //
+    //  info.onAdd = function () {
+    //    this._div = L.DomUtil.create('div', 'power-info'); // create a div with a class "info"
+    //    this.update();
+    //    return this._div;
+    //  };
+    //
+    //  // method that we will use to update the control based on feature properties passed
+    //  info.update = function (props) {
+    //    this._div.innerHTML = '<h4>Мощность места силы</h4>' +  (props ?
+    //    '<span><b>' + props.name + '</b> ' + props.power + '%</span>'
+    //      : '<span>Выберите место силы</span>');
+    //  };
+    //
+    //  return info;
+    //}
 
-      info.onAdd = function () {
-        this._div = L.DomUtil.create('div', 'power-info'); // create a div with a class "info"
-        this.update();
-        return this._div;
-      };
-
-      // method that we will use to update the control based on feature properties passed
-      info.update = function (props) {
-        this._div.innerHTML = '<h4>Мощность места силы</h4>' +  (props ?
-        '<span><b>' + props.name + '</b> ' + props.power + '%</span>'
-          : '<span>Выберите место силы</span>');
-      };
-
-      return info;
-    }
-
-    function createPowerPlacesLegend() {
-      let legend = L.control({position: 'bottomright'});
-
-      legend.onAdd = function() {
-
-        var div = L.DomUtil.create('div', 'power-info power-legend'),
-          grades = [0, 30, 60],
-          labels = [];
-
-        div.innerHTML += "<b>Мощность</b><br><p></p>";
-        // loop through our density intervals and generate a label with a colored square for each interval
-        for (var i = 0; i < grades.length; i++) {
-          div.innerHTML +=
-            '<i style="background:' + getPowerColor(grades[i] + 1) + '"></i> ' +
-            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-        }
-
-        return div;
-      };
-
-      return legend;
-    }
+    //function createPowerPlacesLegend() {
+    //  let legend = L.control({position: 'bottomright'});
+    //
+    //  legend.onAdd = function() {
+    //
+    //    var div = L.DomUtil.create('div', 'power-info power-legend'),
+    //      grades = [0, 30, 60],
+    //      labels = [];
+    //
+    //    div.innerHTML += "<b>Мощность</b><br><p></p>";
+    //    // loop through our density intervals and generate a label with a colored square for each interval
+    //    for (var i = 0; i < grades.length; i++) {
+    //      div.innerHTML +=
+    //        '<i style="background:' + getPowerColor(grades[i] + 1) + '"></i> ' +
+    //        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    //    }
+    //
+    //    return div;
+    //  };
+    //
+    //  return legend;
+    //}
 
     // GeoJSON layers
     //===========================================
