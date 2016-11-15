@@ -8,6 +8,7 @@ angular.module('projectsApp')
     let mymap = null;
     let powerPoints = null;
     let powerInfo = null;
+    let layersCtrl = null;
     const DEFAULT_LOCATION = {
       lat: 54.928835,
       lon: 43.222835
@@ -102,7 +103,7 @@ angular.module('projectsApp')
         //"Грибные места": mushrooms,
         //"Места силы": powerPoints
       };
-      let layersCtrl = L.control.layers(baseMaps, overlayMaps).addTo(mymap);
+      layersCtrl = L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 
       // Power places info control
       //powerInfo = createPowerPlaceInfo();
@@ -368,13 +369,13 @@ angular.module('projectsApp')
           _.forEach(layersData, function (data) {
             const name = data.name;
             const geojson = JSON.parse(data.geojson);
-            createLayer(name, geojson, map, layersCtrl);
+            addLayer(name, geojson, map, layersCtrl);
           })
         }
       );
     }
 
-    function createLayer(name, geojson, map, layersCtrl) {
+    function addLayer(name, geojson, map, layersCtrl) {
       let layer = L.geoJSON(geojson, {
         onEachFeature: function (feature, layer) {
           layer.bindPopup("<i>" + feature.properties.name + "</i>");
@@ -392,6 +393,7 @@ angular.module('projectsApp')
       layersCtrl.addOverlay(layer, name);
     }
 
+    let layerNum = 1;
     function addAddLayerButton(map) {
       let ctrl = L.control({position: 'bottomright'});
 
@@ -405,8 +407,36 @@ angular.module('projectsApp')
 
       // Add button click handler
       $( "#add-layer-btn").click(function() {
-
+        let geojson = genGeoJson();
+        //addLayer(`Слой ${layerNum}`, geojson, mymap, layersCtrl);
+        layerNum += 1;
       });
+    }
+
+    function genGeoJson() {
+      const BASE_LNG = 43.289483;
+      const BASE_LAT = 54.937665;
+      const RND_VAL = 0.3;
+      return [
+        {
+          "type": "Feature",
+          "properties": {
+            "name": `Линия ${layerNum}`
+          },
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [getRandom(BASE_LNG, RND_VAL), getRandom(BASE_LAT, RND_VAL)],
+              [getRandom(BASE_LNG, RND_VAL), getRandom(BASE_LAT, RND_VAL)],
+              [getRandom(BASE_LNG, RND_VAL), getRandom(BASE_LAT, RND_VAL)]
+            ]
+          }
+        }
+      ];
+    }
+
+    function getRandom(base, rndVal) {
+      return base + _.random(-1 * rndVal, rndVal, true);
     }
 
     // GeoJSON layers
