@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('projectsApp')
-  .controller('MapCtrl', function ($scope, $timeout) {
+  .controller('MapCtrl', function ($scope, $timeout, $http) {
     //*******************************************
     // Start up code
 
@@ -116,7 +116,7 @@ angular.module('projectsApp')
         mymap.invalidateSize();
       }, 100);
 
-      createLayers();
+      createLayers(mymap);
     }
 
     //function drawMarker(location) {
@@ -359,8 +359,30 @@ angular.module('projectsApp')
     //  return legend;
     //}
 
-    function createLayers() {
-      log('create layers');
+    function createLayers(map) {
+      //log('create layers');
+      $http.get('/api/layers').success(
+        function (layersData) {
+          _.forEach(layersData, function (data) {
+            const layerName = data.name;
+            const layerGeoJson = JSON.parse(data.geojson);
+            let l = L.geoJSON(layerGeoJson, {
+              onEachFeature: function (feature, layer) {
+                layer.bindPopup("<i>" + feature.properties.name + "</i>");
+                layer.on({
+                  mouseover: function (e) {
+                    e.target.openPopup();
+                  },
+                  mouseout: function (e) {
+                    e.target.closePopup();
+                  }
+                });
+              }
+            });
+            l.addTo(map);
+          })
+        }
+      );
     }
 
     // GeoJSON layers

@@ -51,7 +51,7 @@ User.find({}).remove(function() {
 
 Layer.find({}).remove(function() {
   Layer.create({
-    name : 'Development Tools',
+    name : 'Грибные места',
     geojson: '\
     [\
       {\
@@ -86,7 +86,7 @@ Layer.find({}).remove(function() {
       }\
     ]'
   }, {
-    name : 'Server and Client integration',
+    name : 'Места силы',
     geojson : '\
     [\
       {\

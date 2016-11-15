@@ -5,7 +5,7 @@
 module.exports = {
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://admin:tiguan@ds153657.mlab.com:53657/aza-leaflet'
+    uri: 'mongodb://localhost/projects-dev'
   },
 
   seedDB: true
