@@ -84,11 +84,12 @@ angular.module('projectsApp')
       });
 
       // Overlays
-      let mushrooms = createMushrooms();
-      powerPoints = createPowerPoints();
+      //let mushrooms = createMushrooms();
+      //powerPoints = createPowerPoints();
 
       // Create map
-      mapOptions.layers = [streetTiles, mushrooms, powerPoints];
+      //mapOptions.layers = [streetTiles, mushrooms, powerPoints];
+      mapOptions.layers = [streetTiles];
       mymap = L.map($('.my-map')[0], mapOptions);
 
       // Layer Control
@@ -98,8 +99,8 @@ angular.module('projectsApp')
       };
 
       var overlayMaps = {
-        "Грибные места": mushrooms,
-        "Места силы": powerPoints
+        //"Грибные места": mushrooms,
+        //"Места силы": powerPoints
       };
       L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 
@@ -114,6 +115,8 @@ angular.module('projectsApp')
       $timeout(function () {
         mymap.invalidateSize();
       }, 100);
+
+      createLayers();
     }
 
     //function drawMarker(location) {
@@ -129,190 +132,190 @@ angular.module('projectsApp')
     //===========================================
     // GeoJSON layers
 
-    function createMushrooms() {
-      const mushroomPoints = [
-        {
-          "type": "Feature",
-          "properties": {
-            "name": "Рядом с Технопарком"
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [43.195033, 54.928212]
-          }
-        },
-        {
-          "type": "Feature",
-          "properties": {
-            "name": "Рядом с Колхозным Рынком"
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [43.375642, 54.748849]
-          }
-        },
-        {
-          "type": "Feature",
-          "properties": {
-            "name": "Под Бахтызино"
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [42.843923, 54.84816]
-          }
-        }
-      ];
-
-      // Mushroom icon
-      var iconMushroom = L.icon({
-        iconUrl: 'assets/images/mushroom.png',
-        iconSize:     [32, 32], // size of the icon
-        popupAnchor:  [0, -8] // point from which the popup should open relative to the iconAnchor
-      });
-
-      return L.geoJSON(mushroomPoints, {
-        pointToLayer: function (feature, latlng) {
-          return L.marker(latlng, {icon: iconMushroom}).bindPopup("<i>" + feature.properties.name + "</i>")
-            .on('mouseover', function (e) {
-              e.target.openPopup();
-            })
-            .on('mouseout', function (e) {
-              e.target.closePopup();
-            });
-        }
-      });
-    }
+    //function createMushrooms() {
+    //  const mushroomPoints = [
+    //    {
+    //      "type": "Feature",
+    //      "properties": {
+    //        "name": "Рядом с Технопарком"
+    //      },
+    //      "geometry": {
+    //        "type": "Point",
+    //        "coordinates": [43.195033, 54.928212]
+    //      }
+    //    },
+    //    {
+    //      "type": "Feature",
+    //      "properties": {
+    //        "name": "Рядом с Колхозным Рынком"
+    //      },
+    //      "geometry": {
+    //        "type": "Point",
+    //        "coordinates": [43.375642, 54.748849]
+    //      }
+    //    },
+    //    {
+    //      "type": "Feature",
+    //      "properties": {
+    //        "name": "Под Бахтызино"
+    //      },
+    //      "geometry": {
+    //        "type": "Point",
+    //        "coordinates": [42.843923, 54.84816]
+    //      }
+    //    }
+    //  ];
+    //
+    //  // Mushroom icon
+    //  var iconMushroom = L.icon({
+    //    iconUrl: 'assets/images/mushroom.png',
+    //    iconSize:     [32, 32], // size of the icon
+    //    popupAnchor:  [0, -8] // point from which the popup should open relative to the iconAnchor
+    //  });
+    //
+    //  return L.geoJSON(mushroomPoints, {
+    //    pointToLayer: function (feature, latlng) {
+    //      return L.marker(latlng, {icon: iconMushroom}).bindPopup("<i>" + feature.properties.name + "</i>")
+    //        .on('mouseover', function (e) {
+    //          e.target.openPopup();
+    //        })
+    //        .on('mouseout', function (e) {
+    //          e.target.closePopup();
+    //        });
+    //    }
+    //  });
+    //}
 
 
     //////////////////////////////////////////////////
     // Power places
 
-    function getPowerColor(p) {
-      if (p < 30) {
-        return "#fee0d2";
-      }
-      else if (p >= 30 && p <= 60) {
-        return "#fc9272"
-      }
-      else {
-        return "#de2d26"
-      }
-    }
-
-    function getPowerPlaceStyle(feature) {
-      return {
-        fillColor: getPowerColor(feature.properties.power),
-        weight: 2,
-        opacity: 1,
-        color: 'white',
-        dashArray: '3',
-        fillOpacity: 0.7
-      };
-    }
-
-    function highlightPowerPlace(e) {
-      var layer = e.target;
-
-      layer.setStyle({
-        weight: 5,
-        color: '#666',
-        dashArray: '',
-        fillOpacity: 0.7
-      });
-
-      if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-        layer.bringToFront();
-      }
-
-      powerInfo.update(layer.feature.properties);
-    }
-
-    function resetPowerPlaces(e) {
-      powerPoints.resetStyle(e.target);
-      powerInfo.update();
-    }
-
-    function zoom2powerPlace(e) {
-      mymap.fitBounds(e.target.getBounds());
-    }
-
-    function onEachPowerPlace(feature, layer) {
-      layer.on({
-        mouseover: highlightPowerPlace,
-        mouseout: resetPowerPlaces,
-        click: zoom2powerPlace
-      });
-    }
-
-    function createPowerPoints() {
-      const powerPlaces = [
-        {
-          "type": "Feature",
-          "properties": {
-            "name": "Старый Фонтан",
-            "power": "99"
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [[
-              [43.340415, 54.924501],
-              [43.339686, 54.923117],
-              [43.344578, 54.922165],
-              [43.344728, 54.922468],
-              [43.348044, 54.921837],
-              [43.348376, 54.922511],
-              [43.3452, 54.923166],
-              [43.345329, 54.923500]
-            ]]
-          }
-        },
-        {
-          "type": "Feature",
-          "properties": {
-            "name": "Лыжная база",
-            "power": "55"
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [[
-              [43.347799, 54.936358],
-              [43.348218, 54.93755],
-              [43.345139, 54.938588],
-              [43.347413, 54.940676],
-              [43.355311, 54.939341],
-              [43.358251, 54.937136],
-              [43.357693, 54.93663],
-              [43.350397, 54.936877],
-              [43.349185, 54.936067]
-            ]]
-          }
-        },
-        {
-          "type": "Feature",
-          "properties": {
-            "name": "Протяжка",
-            "power": "45"
-          },
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [[
-              [43.441994, 54.878620],
-              [43.440213, 54.876146],
-              [43.441066, 54.874055],
-              [43.456607, 54.869379],
-              [43.456821, 54.870641],
-              [43.452058, 54.872423],
-              [43.449826, 54.876382]
-            ]]
-          }
-        }
-      ];
-
-      return L.geoJSON(powerPlaces, {
-        style: getPowerPlaceStyle,
-        onEachFeature: onEachPowerPlace
-      });
-    }
+    //function getPowerColor(p) {
+    //  if (p < 30) {
+    //    return "#fee0d2";
+    //  }
+    //  else if (p >= 30 && p <= 60) {
+    //    return "#fc9272"
+    //  }
+    //  else {
+    //    return "#de2d26"
+    //  }
+    //}
+    //
+    //function getPowerPlaceStyle(feature) {
+    //  return {
+    //    fillColor: getPowerColor(feature.properties.power),
+    //    weight: 2,
+    //    opacity: 1,
+    //    color: 'white',
+    //    dashArray: '3',
+    //    fillOpacity: 0.7
+    //  };
+    //}
+    //
+    //function highlightPowerPlace(e) {
+    //  var layer = e.target;
+    //
+    //  layer.setStyle({
+    //    weight: 5,
+    //    color: '#666',
+    //    dashArray: '',
+    //    fillOpacity: 0.7
+    //  });
+    //
+    //  if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+    //    layer.bringToFront();
+    //  }
+    //
+    //  powerInfo.update(layer.feature.properties);
+    //}
+    //
+    //function resetPowerPlaces(e) {
+    //  powerPoints.resetStyle(e.target);
+    //  powerInfo.update();
+    //}
+    //
+    //function zoom2powerPlace(e) {
+    //  mymap.fitBounds(e.target.getBounds());
+    //}
+    //
+    //function onEachPowerPlace(feature, layer) {
+    //  layer.on({
+    //    mouseover: highlightPowerPlace,
+    //    mouseout: resetPowerPlaces,
+    //    click: zoom2powerPlace
+    //  });
+    //}
+    //
+    //function createPowerPoints() {
+    //  const powerPlaces = [
+    //    {
+    //      "type": "Feature",
+    //      "properties": {
+    //        "name": "Старый Фонтан",
+    //        "power": "99"
+    //      },
+    //      "geometry": {
+    //        "type": "Polygon",
+    //        "coordinates": [[
+    //          [43.340415, 54.924501],
+    //          [43.339686, 54.923117],
+    //          [43.344578, 54.922165],
+    //          [43.344728, 54.922468],
+    //          [43.348044, 54.921837],
+    //          [43.348376, 54.922511],
+    //          [43.3452, 54.923166],
+    //          [43.345329, 54.923500]
+    //        ]]
+    //      }
+    //    },
+    //    {
+    //      "type": "Feature",
+    //      "properties": {
+    //        "name": "Лыжная база",
+    //        "power": "55"
+    //      },
+    //      "geometry": {
+    //        "type": "Polygon",
+    //        "coordinates": [[
+    //          [43.347799, 54.936358],
+    //          [43.348218, 54.93755],
+    //          [43.345139, 54.938588],
+    //          [43.347413, 54.940676],
+    //          [43.355311, 54.939341],
+    //          [43.358251, 54.937136],
+    //          [43.357693, 54.93663],
+    //          [43.350397, 54.936877],
+    //          [43.349185, 54.936067]
+    //        ]]
+    //      }
+    //    },
+    //    {
+    //      "type": "Feature",
+    //      "properties": {
+    //        "name": "Протяжка",
+    //        "power": "45"
+    //      },
+    //      "geometry": {
+    //        "type": "Polygon",
+    //        "coordinates": [[
+    //          [43.441994, 54.878620],
+    //          [43.440213, 54.876146],
+    //          [43.441066, 54.874055],
+    //          [43.456607, 54.869379],
+    //          [43.456821, 54.870641],
+    //          [43.452058, 54.872423],
+    //          [43.449826, 54.876382]
+    //        ]]
+    //      }
+    //    }
+    //  ];
+    //
+    //  return L.geoJSON(powerPlaces, {
+    //    style: getPowerPlaceStyle,
+    //    onEachFeature: onEachPowerPlace
+    //  });
+    //}
 
     //function createPowerPlaceInfo() {
     //  let info = L.control({position: 'bottomright'});
@@ -355,6 +358,10 @@ angular.module('projectsApp')
     //
     //  return legend;
     //}
+
+    function createLayers() {
+      log('create layers');
+    }
 
     // GeoJSON layers
     //===========================================
