@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('projectsApp')
-  .controller('MapCtrl', function ($scope, $timeout, $http) {
+  .controller('MapCtrl', function ($scope, $timeout, $http, socket) {
     //*******************************************
     // Start up code
 
@@ -362,6 +362,7 @@ angular.module('projectsApp')
     //  return legend;
     //}
 
+    let allLayersData = [];
     function loadLayers(map, layersCtrl) {
       //log('create layers');
       $http.get('/api/layers').success(
@@ -370,10 +371,21 @@ angular.module('projectsApp')
             const name = data.name;
             const geojson = JSON.parse(data.geojson);
             addLayer(name, geojson, map, layersCtrl);
-          })
+          });
+          socket.syncUpdates('layer', allLayersData, onLayersDataChanged);
         }
       );
     }
+
+    function onLayersDataChanged(event, item, array) {
+      if (event === 'created') {
+        addLayer(item.name, item.geojson, mymap, layersCtrl);
+      }
+    }
+
+    $scope.$on('$destroy', function () {
+      socket.unsyncUpdates('layer');
+    });
 
     function addLayer(name, geojson, map, layersCtrl) {
       let layer = L.geoJSON(geojson, {
