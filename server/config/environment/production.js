@@ -18,6 +18,6 @@ module.exports = {
     uri:    process.env.MONGOLAB_URI ||
             process.env.MONGOHQ_URL ||
             process.env.OPENSHIFT_MONGODB_DB_URL+process.env.OPENSHIFT_APP_NAME ||
-            'mongodb://admin:admin@ds029575.mlab.com:29575/web-starter'
+            'mongodb://admin:tiguan@ds153657.mlab.com:53657/aza-leaflet'
   }
 };

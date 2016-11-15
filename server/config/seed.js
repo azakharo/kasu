@@ -7,6 +7,7 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
+var Layer = require('../api/layer/layer.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -46,4 +47,108 @@ User.find({}).remove(function() {
       console.log('finished populating users');
     }
   );
+});
+
+Layer.find({}).remove(function() {
+  Layer.create({
+    name : 'Development Tools',
+    geojson: '\
+    [\
+      {\
+        "type": "Feature",\
+        "properties": {\
+        "name": "Рядом с Технопарком"\
+      },\
+        "geometry": {\
+        "type": "Point",\
+          "coordinates": [43.195033, 54.928212]\
+      }\
+      },\
+      {\
+        "type": "Feature",\
+        "properties": {\
+        "name": "Рядом с Колхозным Рынком"\
+      },\
+        "geometry": {\
+        "type": "Point",\
+          "coordinates": [43.375642, 54.748849]\
+      }\
+      },\
+      {\
+        "type": "Feature",\
+        "properties": {\
+        "name": "Под Бахтызино"\
+      },\
+        "geometry": {\
+        "type": "Point",\
+          "coordinates": [42.843923, 54.84816]\
+      }\
+      }\
+    ]'
+  }, {
+    name : 'Server and Client integration',
+    geojson : '\
+    [\
+      {\
+        "type": "Feature",\
+        "properties": {\
+        "name": "Старый Фонтан",\
+          "power": "99"\
+      },\
+        "geometry": {\
+        "type": "Polygon",\
+          "coordinates": [[\
+          [43.340415, 54.924501],\
+          [43.339686, 54.923117],\
+          [43.344578, 54.922165],\
+          [43.344728, 54.922468],\
+          [43.348044, 54.921837],\
+          [43.348376, 54.922511],\
+          [43.3452, 54.923166],\
+          [43.345329, 54.923500]\
+        ]]\
+      }\
+      },\
+      {\
+        "type": "Feature",\
+        "properties": {\
+        "name": "Лыжная база",\
+          "power": "55"\
+      },\
+        "geometry": {\
+        "type": "Polygon",\
+          "coordinates": [[\
+          [43.347799, 54.936358],\
+          [43.348218, 54.93755],\
+          [43.345139, 54.938588],\
+          [43.347413, 54.940676],\
+          [43.355311, 54.939341],\
+          [43.358251, 54.937136],\
+          [43.357693, 54.93663],\
+          [43.350397, 54.936877],\
+          [43.349185, 54.936067]\
+        ]]\
+      }\
+      },\
+      {\
+        "type": "Feature",\
+        "properties": {\
+        "name": "Протяжка",\
+          "power": "45"\
+      },\
+        "geometry": {\
+        "type": "Polygon",\
+          "coordinates": [[\
+          [43.441994, 54.878620],\
+          [43.440213, 54.876146],\
+          [43.441066, 54.874055],\
+          [43.456607, 54.869379],\
+          [43.456821, 54.870641],\
+          [43.452058, 54.872423],\
+          [43.449826, 54.876382]\
+        ]]\
+      }\
+      }\
+      ]'
+  });
 });
