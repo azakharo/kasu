@@ -116,7 +116,7 @@ angular.module('projectsApp')
         mymap.invalidateSize();
       }, 100);
 
-      createLayers(mymap, layersCtrl);
+      loadLayers(mymap, layersCtrl);
     }
 
     //function drawMarker(location) {
@@ -359,31 +359,35 @@ angular.module('projectsApp')
     //  return legend;
     //}
 
-    function createLayers(map, layersCtrl) {
+    function loadLayers(map, layersCtrl) {
       //log('create layers');
       $http.get('/api/layers').success(
         function (layersData) {
           _.forEach(layersData, function (data) {
-            const layerName = data.name;
-            const layerGeoJson = JSON.parse(data.geojson);
-            let layer = L.geoJSON(layerGeoJson, {
-              onEachFeature: function (feature, layer) {
-                layer.bindPopup("<i>" + feature.properties.name + "</i>");
-                layer.on({
-                  mouseover: function (e) {
-                    e.target.openPopup();
-                  },
-                  mouseout: function (e) {
-                    e.target.closePopup();
-                  }
-                });
-              }
-            });
-            layer.addTo(map);
-            layersCtrl.addOverlay(layer, layerName);
+            const name = data.name;
+            const geojson = JSON.parse(data.geojson);
+            createLayer(name, geojson, map, layersCtrl);
           })
         }
       );
+    }
+
+    function createLayer(name, geojson, map, layersCtrl) {
+      let layer = L.geoJSON(geojson, {
+        onEachFeature: function (feature, layer) {
+          layer.bindPopup("<i>" + feature.properties.name + "</i>");
+          layer.on({
+            mouseover: function (e) {
+              e.target.openPopup();
+            },
+            mouseout: function (e) {
+              e.target.closePopup();
+            }
+          });
+        }
+      });
+      layer.addTo(map);
+      layersCtrl.addOverlay(layer, name);
     }
 
     // GeoJSON layers
