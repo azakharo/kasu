@@ -117,6 +117,8 @@ angular.module('projectsApp')
       }, 100);
 
       loadLayers(mymap, layersCtrl);
+
+      addAddLayerButton(mymap);
     }
 
     //function drawMarker(location) {
@@ -388,6 +390,23 @@ angular.module('projectsApp')
       });
       layer.addTo(map);
       layersCtrl.addOverlay(layer, name);
+    }
+
+    function addAddLayerButton(map) {
+      let ctrl = L.control({position: 'bottomright'});
+
+      ctrl.onAdd = function () {
+        this._div = L.DomUtil.create('div', 'addlayer'); // create a div with a class "info"
+        this._div.innerHTML = '<button id="add-layer-btn" class="btn btn-default">Добавить слой</button>';
+        return this._div;
+      };
+
+      ctrl.addTo(mymap);
+
+      // Add button click handler
+      $( "#add-layer-btn").click(function() {
+
+      });
     }
 
     // GeoJSON layers
