@@ -408,7 +408,17 @@ angular.module('projectsApp')
       // Add button click handler
       $( "#add-layer-btn").click(function() {
         let geojson = genGeoJson();
+
         //addLayer(`Слой ${layerNum}`, geojson, mymap, layersCtrl);
+
+        let layerName = `Слой ${layerNum}`;
+        let geoJsonStr = JSON.stringify(geojson, null, 2);
+
+        $http.post('/api/layers', {
+          name: layerName,
+          geojson: geoJsonStr
+        });
+
         layerNum += 1;
       });
     }
