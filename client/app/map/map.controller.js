@@ -379,7 +379,8 @@ angular.module('projectsApp')
 
     function onLayersDataChanged(event, item, array) {
       if (event === 'created') {
-        addLayer(item.name, item.geojson, mymap, layersCtrl);
+        let geoJson = JSON.parse(item.geojson);
+        addLayer(item.name, geoJson, mymap, layersCtrl);
       }
     }
 
@@ -405,7 +406,7 @@ angular.module('projectsApp')
       layersCtrl.addOverlay(layer, name);
     }
 
-    let layerNum = 1;
+    const DATETIME_FRMT = 'YYYY.MM.DD HH:mm:ss';
     function addAddLayerButton(map) {
       let ctrl = L.control({position: 'bottomright'});
 
@@ -423,15 +424,14 @@ angular.module('projectsApp')
 
         //addLayer(`Слой ${layerNum}`, geojson, mymap, layersCtrl);
 
-        let layerName = `Слой ${layerNum}`;
+        let curDt = moment().format(DATETIME_FRMT);
+        let layerName = `Слой ${curDt}`;
         let geoJsonStr = JSON.stringify(geojson, null, 2);
 
         $http.post('/api/layers', {
           name: layerName,
           geojson: geoJsonStr
         });
-
-        layerNum += 1;
       });
     }
 
@@ -439,11 +439,12 @@ angular.module('projectsApp')
       const BASE_LNG = 43.289483;
       const BASE_LAT = 54.937665;
       const RND_VAL = 0.3;
+      let curDt = moment().format(DATETIME_FRMT);
       return [
         {
           "type": "Feature",
           "properties": {
-            "name": `Линия ${layerNum}`
+            "name": `Линия ${curDt}`
           },
           "geometry": {
             "type": "LineString",
