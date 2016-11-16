@@ -41,19 +41,19 @@ exports.create = function(req, res) {
 //    });
 //  });
 //};
-//
-//// Deletes a layer from the DB.
-//exports.destroy = function(req, res) {
-//  Layer.findById(req.params.id, function (err, layer) {
-//    if(err) { return handleError(res, err); }
-//    if(!layer) { return res.status(404).send('Not Found'); }
-//    layer.remove(function(err) {
-//      if(err) { return handleError(res, err); }
-//      return res.status(204).send('No Content');
-//    });
-//  });
-//};
-//
+
+// Deletes a layer from the DB.
+exports.destroy = function(req, res) {
+  Layer.findById(req.params.id, function (err, layer) {
+    if(err) { return handleError(res, err); }
+    if(!layer) { return res.status(404).send('Not Found'); }
+    layer.remove(function(err) {
+      if(err) { return handleError(res, err); }
+      return res.status(204).send('No Content');
+    });
+  });
+};
+
 //function handleError(res, err) {
 //  return res.status(500).send(err);
 //}
