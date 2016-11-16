@@ -494,9 +494,9 @@ angular.module('projectsApp')
       let hdrH = $('.my-navbar').height();
       let footerH = $('.my-footer').height();
       let mapH = wndH - hdrH;
-      $('.main-container').height(wndH);
-      $('.content-container').height(mapH);
-      $('.page-content-container').height(mapH);
+      //$('.main-container').height(wndH);
+      //$('.content-container').height(mapH);
+      //$('.page-content-container').height(mapH);
       $('.my-map').height(mapH);
       mymap.invalidateSize();
       //let msg = `
