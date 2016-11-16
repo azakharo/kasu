@@ -256,7 +256,8 @@ module.exports = function (grunt) {
             '<%= yeoman.dist %>/public/{,*/}*.css',
             '<%= yeoman.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
             '<%= yeoman.dist %>/public/assets/fonts/*',
-            '!<%= yeoman.dist %>/public/bower_components/animate.css'
+            '!<%= yeoman.dist %>/public/bower_components/*.css',
+            '!<%= yeoman.dist %>/public/bower_components/*.js'
           ]
         }
       }
@@ -277,9 +278,12 @@ module.exports = function (grunt) {
       html: ['<%= yeoman.dist %>/public/{,*/}*.html'],
       css: [
         '<%= yeoman.dist %>/public/{,*/}*.css',
-        '!<%= yeoman.dist %>/public/bower_components/animate.css'
+        '!<%= yeoman.dist %>/public/bower_components/*.css'
       ],
-      js: ['<%= yeoman.dist %>/public/{,*/}*.js'],
+      js: [
+        '<%= yeoman.dist %>/public/{,*/}*.js',
+        '!<%= yeoman.dist %>/public/bower_components/*.js'
+      ],
       options: {
         assetsDirs: [
           '<%= yeoman.dist %>/public',
