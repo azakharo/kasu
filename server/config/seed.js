@@ -51,13 +51,13 @@ User.find({}).remove(function() {
 
 Layer.find({}).remove(function() {
   Layer.create({
-    name : 'Грибные места',
+    name : 'Тревожные события',
     geojson: '\
     [\
       {\
         "type": "Feature",\
         "properties": {\
-        "name": "Рядом с Технопарком"\
+        "name": "Сирена"\
       },\
         "geometry": {\
         "type": "Point",\
@@ -67,7 +67,7 @@ Layer.find({}).remove(function() {
       {\
         "type": "Feature",\
         "properties": {\
-        "name": "Рядом с Колхозным Рынком"\
+        "name": "Выстрел"\
       },\
         "geometry": {\
         "type": "Point",\
@@ -77,7 +77,7 @@ Layer.find({}).remove(function() {
       {\
         "type": "Feature",\
         "properties": {\
-        "name": "Под Бахтызино"\
+        "name": "Разбитое стекло"\
       },\
         "geometry": {\
         "type": "Point",\
@@ -86,7 +86,7 @@ Layer.find({}).remove(function() {
       }\
     ]'
   }, {
-    name : 'Места силы',
+    name : 'Криминальные зоны',
     geojson : '\
     [\
       {\
