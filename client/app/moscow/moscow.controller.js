@@ -88,7 +88,7 @@ angular.module('projectsApp')
       ];
 
       _.forEach(layerInfos, function (layInf) {
-        $http.get(`assets/geojson/${layInf.geoJsonFname}`).success(
+        $http.get(`/assets/geojson/${layInf.geoJsonFname}`).success(
           function (geojson) {
             addLayer(layInf.name, geojson, layInf.fillColor, map, layersCtrl);
           }
