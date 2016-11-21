@@ -384,6 +384,7 @@ module.exports = function (grunt) {
             'assets/images/{,*/}*.{webp}',
             'assets/fonts/**/*',
             'assets/images/*',
+            'assets/geojson/*',
             'index.html'
           ]
         }, {
