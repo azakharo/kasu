@@ -103,14 +103,14 @@ angular.module('projectsApp')
         },
         onEachFeature: function (feature, layer) {
           layer.bindPopup("<i>" + feature.properties.NAME + "</i>");
-          layer.on({
-            mouseover: function (e) {
-              e.target.openPopup();
-            },
-            mouseout: function (e) {
-              e.target.closePopup();
-            }
-          });
+          //layer.on({
+          //  mouseover: function (e) {
+          //    e.target.openPopup();
+          //  },
+          //  mouseout: function (e) {
+          //    e.target.closePopup();
+          //  }
+          //});
         }
       });
       layer.addTo(map);
