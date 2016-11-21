@@ -32,4 +32,29 @@ angular.module('projectsApp')
       }, 0);
     };
 
+
+    /////////////////////////////////////////////////////////////////
+    // Shared code (for maps)
+
+    $scope.addLayer = function(name, geojson, map, layersCtrl) {
+      let layer = L.geoJSON(geojson, {
+        onEachFeature: function (feature, layer) {
+          layer.bindPopup("<i>" + feature.properties.name + "</i>");
+          layer.on({
+            mouseover: function (e) {
+              e.target.openPopup();
+            },
+            mouseout: function (e) {
+              e.target.closePopup();
+            }
+          });
+        }
+      });
+      layer.addTo(map);
+      layersCtrl.addOverlay(layer, name);
+    };
+
+    // Shared code (for maps)
+    /////////////////////////////////////////////////////////////////
+
   });

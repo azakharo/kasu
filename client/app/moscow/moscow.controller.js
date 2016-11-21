@@ -63,12 +63,36 @@ angular.module('projectsApp')
       $timeout(function () {
         mymap.invalidateSize();
       }, 100);
+
+      loadLayers(mymap, layersCtrl);
     }
 
 
     //===========================================
     // GeoJSON layers
 
+    function loadLayers(map, layersCtrl) {
+      //log('load layers');
+
+      const layerInfos = [
+        {
+          name: 'Административные округа',
+          geoJsonFname: 'ao.geojson'
+        },
+        {
+          name: 'Муниципальные образования',
+          geoJsonFname: 'mo.geojson'
+        }
+      ];
+
+      _.forEach(layerInfos, function (layInf) {
+        $http.get(`assets/geojson/${layInf.geoJsonFname}`).success(
+          function (geojson) {
+            $scope.addLayer(layInf.name, geojson, map, layersCtrl);
+          }
+        );
+      });
+    }
 
     // GeoJSON layers
     //===========================================
