@@ -77,21 +77,44 @@ angular.module('projectsApp')
       const layerInfos = [
         {
           name: 'Административные округа',
-          geoJsonFname: 'ao.geojson'
+          geoJsonFname: 'ao.geojson',
+          fillColor: "#ff7800"
         },
         {
           name: 'Муниципальные образования',
-          geoJsonFname: 'mo.geojson'
+          geoJsonFname: 'mo.geojson',
+          fillColor: "#ff78a0"
         }
       ];
 
       _.forEach(layerInfos, function (layInf) {
         $http.get(`assets/geojson/${layInf.geoJsonFname}`).success(
           function (geojson) {
-            $scope.addLayer(layInf.name, geojson, map, layersCtrl);
+            addLayer(layInf.name, geojson, layInf.fillColor, map, layersCtrl);
           }
         );
       });
+    }
+
+    function addLayer(name, geojson, fillColor, map, layersCtrl) {
+      let layer = L.geoJSON(geojson, {
+        style: function (feature) {
+          return {color: fillColor};
+        },
+        onEachFeature: function (feature, layer) {
+          layer.bindPopup("<i>" + feature.properties.NAME + "</i>");
+          layer.on({
+            mouseover: function (e) {
+              e.target.openPopup();
+            },
+            mouseout: function (e) {
+              e.target.closePopup();
+            }
+          });
+        }
+      });
+      layer.addTo(map);
+      layersCtrl.addOverlay(layer, name);
     }
 
     // GeoJSON layers

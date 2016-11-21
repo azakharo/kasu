@@ -116,7 +116,7 @@ angular.module('projectsApp')
           _.forEach(layersData, function (data) {
             const name = data.name;
             const geojson = JSON.parse(data.geojson);
-            $scope.addLayer(name, geojson, map, layersCtrl);
+            addLayer(name, geojson, map, layersCtrl);
           });
           socket.syncUpdates('layer', allLayersData, onLayersDataChanged);
         }
@@ -126,8 +126,26 @@ angular.module('projectsApp')
     function onLayersDataChanged(event, item, array) {
       if (event === 'created') {
         let geoJson = JSON.parse(item.geojson);
-        $scope.addLayer(item.name, geoJson, mymap, layersCtrl);
+        addLayer(item.name, geoJson, mymap, layersCtrl);
       }
+    }
+
+    function addLayer(name, geojson, map, layersCtrl) {
+      let layer = L.geoJSON(geojson, {
+        onEachFeature: function (feature, layer) {
+          layer.bindPopup("<i>" + feature.properties.name + "</i>");
+          layer.on({
+            mouseover: function (e) {
+              e.target.openPopup();
+            },
+            mouseout: function (e) {
+              e.target.closePopup();
+            }
+          });
+        }
+      });
+      layer.addTo(map);
+      layersCtrl.addOverlay(layer, name);
     }
 
     $scope.$on('$destroy', function () {
