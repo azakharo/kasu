@@ -16,6 +16,10 @@ angular.module('projectsApp')
       {
         state: 'main.test',
         title: 'Тест'
+      },
+      {
+        state: 'main.moscow',
+        title: 'Москва'
       }
     ];
 

@@ -1,0 +1,121 @@
+'use strict';
+
+angular.module('projectsApp')
+  .controller('MoscowCtrl', function ($scope, $timeout, $http, socket) {
+    //*******************************************
+    // Start up code
+
+    let mymap = null;
+    let layersCtrl = null;
+    const DEFAULT_LOCATION = {
+      lat: 55.754106,
+      lon: 37.620386
+    };
+    const DEFAULT_ZOOM = 11;
+
+    drawMap(DEFAULT_LOCATION);
+
+    // Start up code
+    //*******************************************
+
+
+    ////////////////////////////////////////////////
+    // Implementation
+
+    function drawMap(location) {
+      let mapOptions = {
+        zoom: DEFAULT_ZOOM,
+        attributionControl: false,
+        preferCanvas: true
+      };
+      if (location) {
+        mapOptions.center = [location.lat, location.lon];
+      }
+
+      const TILE_URL_TEMPL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
+      const TILE_ACCESS_TOKEN = 'pk.eyJ1IjoiYXpha2hhcm8iLCJhIjoiY2l1cDhvMnY4MDAxMzJvcGt1ZmVyaGVkYSJ9.N1F11vuDHwrrkuEXjBSOeA';
+
+      // Base layers
+      let streetTiles = L.tileLayer(TILE_URL_TEMPL, {
+        maxZoom: 18,
+        id: 'mapbox.streets',
+        accessToken: TILE_ACCESS_TOKEN
+      });
+      let grayscaleTiles = L.tileLayer(TILE_URL_TEMPL, {
+        maxZoom: 18,
+        id: 'mapbox.light',
+        accessToken: TILE_ACCESS_TOKEN
+      });
+
+      // Create map
+      //mapOptions.layers = [streetTiles, mushrooms, powerPoints];
+      mapOptions.layers = [streetTiles];
+      mymap = L.map($('.moscow-map')[0], mapOptions);
+
+      // Layer Control
+      const baseMaps = {
+        "Карта дорог": streetTiles,
+        "Базовая карта": grayscaleTiles
+      };
+
+      layersCtrl = L.control.layers(baseMaps).addTo(mymap);
+
+      $timeout(function () {
+        mymap.invalidateSize();
+      }, 100);
+    }
+
+
+    //===========================================
+    // GeoJSON layers
+
+
+    // GeoJSON layers
+    //===========================================
+
+
+    // WORKAROUND
+    // The map is not re-drawn when the sidebar has been hidden (gray area remains)
+    $scope.$watch('showSidebar', function (newVal) {
+      $timeout(function () {
+        if (!newVal) {
+          mymap.invalidateSize();
+        }
+      }, 600);
+    });
+
+
+    /////////////////////////////////////////////////////////////////
+    // Map Height issue in Safari
+
+    let browserInfo = getBrowserInfo();
+    if (/^safari$/i.test(browserInfo.name)) {
+      // If this is Safari
+      $timeout(resizeMap, 700);
+
+      var onWindowResize = debounce(resizeMap, 1000);
+      $(window).resize(onWindowResize);
+    }
+
+    function resizeMap() {
+      let wndH = window.innerHeight;
+      let hdrH = $('.my-navbar').height();
+      let footerH = $('.my-footer').height();
+      let mapH = wndH - hdrH;
+      $('.my-footer').hide();
+      //$('.main-container').height(wndH);
+      //$('.content-container').height(mapH);
+      //$('.page-content-container').height(mapH);
+      $('.moscow-map').height(mapH);
+      mymap.invalidateSize();
+      //let msg = `
+      //wndH = ${wndH}
+      //navbarH = ${hdrH}
+      //footerH = ${footerH}`;
+      //alert(msg);
+    }
+
+    // Map Height issue in Safari
+    /////////////////////////////////////////////////////////////////
+
+  });

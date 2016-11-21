@@ -6,8 +6,6 @@ angular.module('projectsApp')
     // Start up code
 
     let mymap = null;
-    let powerPoints = null;
-    let powerInfo = null;
     let layersCtrl = null;
     const DEFAULT_LOCATION = {
       lat: 54.928835,

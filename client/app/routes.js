@@ -23,6 +23,11 @@ angular.module('projectsApp').config(['$stateProvider', '$urlRouterProvider',
         url: '/test',
         templateUrl: 'app/test/test.html',
         controller: 'TestCtrl'
+      })
+      .state('main.moscow', {
+        url: '/moscow',
+        templateUrl: 'app/moscow/moscow.html',
+        controller: 'MoscowCtrl'
       });
   }
 ]);
