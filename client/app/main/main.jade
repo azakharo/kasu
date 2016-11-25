@@ -5,7 +5,7 @@
       button.btn.btn-default.sidebar-btn(ng-click="onSidebarToggleClick()")
         i.fa.fa-bars
       button.btn.btn-default.sidebar-btn(ng-click="onSidebarPinBtnClick()")
-        i.fa.fa-thumb-tack
+        i.fa.fa-thumb-tack(ng-class="{'sidebar-pin-btn-clicked': isSidebarPinned}")
     ul.sidebar-nav
       li(ng-repeat="item in sidebarItems")
         a(ui-sref='{{item.state}}', ui-sref-active="active", ng-click="onSidebarItemClick()") {{item.title}}
