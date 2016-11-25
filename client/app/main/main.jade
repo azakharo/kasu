@@ -1,9 +1,12 @@
 .main-container.vw100.vh100
   // Sidebar
   .sidebar-container.h100(ng-show="showSidebar")
+    .sidebar-buttons.p1
+      button.btn.btn-default.sidebar-btn
+        i.fa.fa-bars
+      button.btn.btn-default.sidebar-btn
+        i.fa.fa-thumb-tack
     ul.sidebar-nav
-      li.sidebar-brand
-        a(href='#') Меню:
       li(ng-repeat="item in sidebarItems")
         a(ui-sref='{{item.state}}', ui-sref-active="active", ng-click="animateBrand()") {{item.title}}
   // Main content area
