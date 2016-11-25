@@ -2,6 +2,7 @@
 
 angular.module('projectsApp')
   .controller('MainCtrl', function ($scope, $timeout) {
+    $scope.isSidebarPinned = false;
     $scope.showSidebar = window.innerWidth >= 768;
 
     $scope.onSidebarToggleClick = function () {
@@ -30,6 +31,12 @@ angular.module('projectsApp')
       $timeout(function () {
         $(BRAND_SELECTOR).addClass(BRAND_ANIM_CLASSES);
       }, 0);
+    };
+
+    log(`$scope.isSidebarPinned=${$scope.isSidebarPinned}`);
+    $scope.onSidebarPinBtnClick = function () {
+      $scope.isSidebarPinned = !$scope.isSidebarPinned;
+      log(`$scope.isSidebarPinned=${$scope.isSidebarPinned}`);
     };
 
   });

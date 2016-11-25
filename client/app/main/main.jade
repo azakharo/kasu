@@ -2,9 +2,9 @@
   // Sidebar
   .sidebar-container.h100(ng-show="showSidebar")
     .sidebar-buttons.p1
-      button.btn.btn-default.sidebar-btn
+      button.btn.btn-default.sidebar-btn(ng-click="onSidebarToggleClick()")
         i.fa.fa-bars
-      button.btn.btn-default.sidebar-btn
+      button.btn.btn-default.sidebar-btn(ng-click="onSidebarPinBtnClick()")
         i.fa.fa-thumb-tack
     ul.sidebar-nav
       li(ng-repeat="item in sidebarItems")
@@ -21,8 +21,10 @@
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          button.sidebar-toggle.btn.btn-default.responsive-btn.mr2(ng-click="onSidebarToggleClick()")
-            i.fa.fa-bars
+          .navbar-sidebar-toggle-container
+            button.navbar-sidebar-toggler.btn.btn-default.responsive-btn.mr2(ng-click="onSidebarToggleClick()",
+            ng-hide="showSidebar")
+              i.fa.fa-bars
           a.navbar-brand(href='http://sarov-itc.ru/', target="_blank")
             img(src="assets/images/logo.png", alt="лого")
         // Collect the nav links, forms, and other content for toggling
