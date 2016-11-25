@@ -1,6 +1,6 @@
 .main-container.vw100.vh100
   // Sidebar
-  .sidebar-container.h100(ng-show="showSidebar")
+  .sidebar-container.h100(ng-show="showSidebar", ng-class="isSidebarPinned ? 'sidebar-container-pinned' : 'sidebar-container-unpinned'")
     .sidebar-buttons.p1
       button.btn.btn-default.sidebar-btn(ng-click="onSidebarToggleClick()")
         i.fa.fa-bars
@@ -8,7 +8,7 @@
         i.fa.fa-thumb-tack
     ul.sidebar-nav
       li(ng-repeat="item in sidebarItems")
-        a(ui-sref='{{item.state}}', ui-sref-active="active", ng-click="animateBrand()") {{item.title}}
+        a(ui-sref='{{item.state}}', ui-sref-active="active", ng-click="onSidebarItemClick()") {{item.title}}
   // Main content area
   .content-container.h100
     nav.navbar.navbar-default.my-navbar

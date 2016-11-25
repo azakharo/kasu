@@ -33,10 +33,18 @@ angular.module('projectsApp')
       }, 0);
     };
 
-    log(`$scope.isSidebarPinned=${$scope.isSidebarPinned}`);
+    $scope.onSidebarItemClick = function () {
+      $scope.animateBrand();
+      if (!$scope.isSidebarPinned) {
+        $scope.showSidebar = false;
+      }
+    };
+
     $scope.onSidebarPinBtnClick = function () {
       $scope.isSidebarPinned = !$scope.isSidebarPinned;
-      log(`$scope.isSidebarPinned=${$scope.isSidebarPinned}`);
+      if (!$scope.isSidebarPinned) { // if became unpinned
+        $scope.showSidebar = false;
+      }
     };
 
   });

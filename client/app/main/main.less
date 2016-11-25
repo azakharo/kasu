@@ -84,11 +84,21 @@ a.navbar-brand > img {
 }
 
 .sidebar-container {
-  flex: none;
   width: 250px;
 
   overflow-y: auto;
   background: #000;
+}
+
+.sidebar-container-unpinned {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1010;
+}
+
+.sidebar-container-pinned {
+  flex: none;
 }
 
 .sidebar-container.ng-hide-add {
