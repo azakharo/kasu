@@ -1,72 +1,72 @@
 .main-container.vw100.vh100
-  nav.navbar.navbar-default.my-navbar
-    .container-fluid
-      // Brand and toggle get grouped for better mobile display
-      .navbar-header
-        button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1',
-        aria-expanded='false')
-          span.sr-only Меню навигации
-          span.icon-bar
-          span.icon-bar
-          span.icon-bar
-        button.sidebar-toggle.btn.btn-default.responsive-btn.mr2(ng-click="onSidebarToggleClick()")
-          i.fa.fa-bars
-        a.navbar-brand(href='http://sarov-itc.ru/', target="_blank")
-          img(src="assets/images/logo.png", alt="лого")
-      // Collect the nav links, forms, and other content for toggling
-      #bs-example-navbar-collapse-1.collapse.navbar-collapse
-        ul.nav.navbar-nav
-          li.active
-            a(href='#') Link1
-          li
-            a(href='#') Link2
-          li.dropdown
-            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true',
-            aria-expanded='false') Dropdown1
-              span.caret
-            ul.dropdown-menu
-              li
-                a(href='#') Action
-              li
-                a(href='#') Another action
-              li
-                a(href='#') Something else here
-              li.divider(role='separator')
-              li
-                a(href='#') Separated link
-              li.divider(role='separator')
-              li
-                a(href='#') One more separated link
-        form.navbar-form.navbar-left
-          .form-group
-            input.form-control(type='text', placeholder='Search')
-        ul.nav.navbar-nav.navbar-right
-          li
-            a(href='#') Link3
-          li.dropdown
-            a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true',
-            aria-expanded='false') Dropdown2
-              span.caret
-            ul.dropdown-menu
-              li
-                a(href='#') Action
-              li
-                a(href='#') Another action
-              li
-                a(href='#') Something else here
-              li.divider(role='separator')
-              li
-                a(href='#') Separated link
+  // Sidebar
+  .sidebar-container.h100(ng-show="showSidebar")
+    ul.sidebar-nav
+      li.sidebar-brand
+        a(href='#') Меню:
+      li(ng-repeat="item in sidebarItems")
+        a(ui-sref='{{item.state}}', ui-sref-active="active", ng-click="animateBrand()") {{item.title}}
   // Main content area
-  .content-container
-    // Sidebar
-    .sidebar-container.h100(ng-show="showSidebar")
-      ul.sidebar-nav
-        li.sidebar-brand
-          a(href='#') Меню:
-        li(ng-repeat="item in sidebarItems")
-          a(ui-sref='{{item.state}}', ui-sref-active="active", ng-click="animateBrand()") {{item.title}}
+  .content-container.h100
+    nav.navbar.navbar-default.my-navbar
+      .container-fluid
+        // Brand and toggle get grouped for better mobile display
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1',
+          aria-expanded='false')
+            span.sr-only Меню навигации
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          button.sidebar-toggle.btn.btn-default.responsive-btn.mr2(ng-click="onSidebarToggleClick()")
+            i.fa.fa-bars
+          a.navbar-brand(href='http://sarov-itc.ru/', target="_blank")
+            img(src="assets/images/logo.png", alt="лого")
+        // Collect the nav links, forms, and other content for toggling
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li.active
+              a(href='#') Link1
+            li
+              a(href='#') Link2
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true',
+              aria-expanded='false') Dropdown1
+                span.caret
+              ul.dropdown-menu
+                li
+                  a(href='#') Action
+                li
+                  a(href='#') Another action
+                li
+                  a(href='#') Something else here
+                li.divider(role='separator')
+                li
+                  a(href='#') Separated link
+                li.divider(role='separator')
+                li
+                  a(href='#') One more separated link
+          form.navbar-form.navbar-left
+            .form-group
+              input.form-control(type='text', placeholder='Search')
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href='#') Link3
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true',
+              aria-expanded='false') Dropdown2
+                span.caret
+              ul.dropdown-menu
+                li
+                  a(href='#') Action
+                li
+                  a(href='#') Another action
+                li
+                  a(href='#') Something else here
+                li.divider(role='separator')
+                li
+                  a(href='#') Separated link
     // Page Content
-    .page-content-container.h100(ui-view='')
-  footer.my-footer.text-center Copyright &copy; 2015-2016 &mdash;&nbsp;
-    a(href="http://sarov-itc.ru/", target="_blank") ИТЦ Система-Саров
+    .page-content-container.w100(ui-view='')
+    footer.my-footer.text-center Copyright &copy; 2015-2016 &mdash;&nbsp;
+      a(href="http://sarov-itc.ru/", target="_blank") ИТЦ Система-Саров
