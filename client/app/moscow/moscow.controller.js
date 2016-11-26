@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('projectsApp')
-  .controller('MoscowCtrl', function ($scope, $timeout, $http, socket) {
+  .controller('MoscowCtrl', function ($scope, $rootScope, $timeout, $http) {
     //*******************************************
     // Start up code
 
@@ -23,6 +23,8 @@ angular.module('projectsApp')
     // Implementation
 
     function drawMap(location) {
+      $rootScope.isGettingData = true;
+
       let mapOptions = {
         zoom: DEFAULT_ZOOM,
         attributionControl: false,
@@ -87,10 +89,13 @@ angular.module('projectsApp')
         }
       ];
 
-      _.forEach(layerInfos, function (layInf) {
+      _.forEach(layerInfos, function (layInf, layIndex) {
         $http.get(`/assets/geojson/${layInf.geoJsonFname}`).success(
           function (geojson) {
             addLayer(layInf.name, geojson, layInf.fillColor, map, layersCtrl);
+            if (layIndex === layerInfos.length - 1) {
+              $rootScope.isGettingData = false;
+            }
           }
         );
       });

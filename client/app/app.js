@@ -7,7 +7,8 @@ angular.module('projectsApp', [
   'ngAnimate',
   'btford.socket-io',
   'ui.router',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'angularSpinner'
 ])
   .config(function ($locationProvider, $httpProvider) {
     $locationProvider.html5Mode(true);

@@ -3,6 +3,7 @@
 angular.module('projectsApp')
   .controller('MainCtrl', function ($scope, $rootScope, $timeout) {
     $rootScope.isSidebarShown = false; // window.innerWidth >= 768;
+    $rootScope.isGettingData = false;
 
     $scope.onSidebarToggleClick = function () {
       $rootScope.isSidebarShown = !$rootScope.isSidebarShown;

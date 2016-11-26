@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('projectsApp')
-  .controller('MapCtrl', function ($scope, $timeout, $http, socket) {
+  .controller('MapCtrl', function ($scope, $rootScope, $timeout, $http, socket) {
     //*******************************************
     // Start up code
 
@@ -58,6 +58,8 @@ angular.module('projectsApp')
     //======================================
 
     function drawMap(location) {
+      $rootScope.isGettingData = true;
+
       let mapOptions = {
         zoom: DEFAULT_ZOOM,
         attributionControl: false,
@@ -120,7 +122,10 @@ angular.module('projectsApp')
           });
           socket.syncUpdates('layer', allLayersData, onLayersDataChanged);
         }
-      );
+      )
+      .finally(function() {
+          $rootScope.isGettingData = false;
+      });
     }
 
     function onLayersDataChanged(event, item, array) {
