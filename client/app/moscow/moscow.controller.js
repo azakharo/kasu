@@ -123,7 +123,7 @@ angular.module('projectsApp')
 
     // WORKAROUND
     // The map is not re-drawn when the sidebar has been hidden (gray area remains)
-    $scope.$watch('showSidebar', function (newVal) {
+    $scope.$watch('isSidebarShown', function (newVal) {
       $timeout(function () {
         if (!newVal) {
           mymap.invalidateSize();

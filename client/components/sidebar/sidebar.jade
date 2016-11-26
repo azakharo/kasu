@@ -1,0 +1,10 @@
+.sidebar-container.h100(ng-show="$ctrl.rootScope.isSidebarShown",
+ng-class="$ctrl.isPinned ? 'sidebar-container-pinned' : 'sidebar-container-unpinned'")
+  .sidebar-buttons.p1
+    button.btn.btn-default.sidebar-btn(ng-click="$ctrl.onToggleClick()")
+      i.fa.fa-bars
+    button.btn.btn-default.sidebar-btn(ng-click="$ctrl.onPinClick()")
+      i.fa.fa-thumb-tack(ng-class="{'sidebar-pin-btn-clicked': $ctrl.isPinned}")
+  ul.sidebar-nav
+    li(ng-repeat="item in $ctrl.menuItems")
+      a(ui-sref='{{item.state}}', ui-sref-active="active", ng-click="$ctrl.onItemClick(item)") {{item.title}}

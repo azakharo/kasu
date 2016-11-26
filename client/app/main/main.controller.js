@@ -1,12 +1,11 @@
 'use strict';
 
 angular.module('projectsApp')
-  .controller('MainCtrl', function ($scope, $timeout) {
-    $scope.isSidebarPinned = false;
-    $scope.showSidebar = false; // window.innerWidth >= 768;
+  .controller('MainCtrl', function ($scope, $rootScope, $timeout) {
+    $rootScope.isSidebarShown = false; // window.innerWidth >= 768;
 
     $scope.onSidebarToggleClick = function () {
-      $scope.showSidebar = !$scope.showSidebar;
+      $rootScope.isSidebarShown = !$rootScope.isSidebarShown;
     };
 
     $scope.sidebarItems = [
@@ -35,16 +34,6 @@ angular.module('projectsApp')
 
     $scope.onSidebarItemClick = function () {
       $scope.animateBrand();
-      if (!$scope.isSidebarPinned) {
-        $scope.showSidebar = false;
-      }
-    };
-
-    $scope.onSidebarPinBtnClick = function () {
-      $scope.isSidebarPinned = !$scope.isSidebarPinned;
-      if (!$scope.isSidebarPinned) { // if became unpinned
-        $scope.showSidebar = false;
-      }
     };
 
   });

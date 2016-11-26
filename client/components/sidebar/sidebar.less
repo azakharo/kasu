@@ -1,3 +1,7 @@
+
+//////////////////////////////////////////////////////
+// Visual appearance
+
 .sidebar-nav {
   margin: 0;
   padding: 0;
@@ -47,6 +51,27 @@
   background: darkslategrey;
 }
 
+
+//////////////////////////////////////////////////////
+// Layout
+
+.sidebar-container {
+  width: 250px;
+  overflow-y: auto;
+  background: #000;
+}
+
+.sidebar-container-unpinned {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1010;
+}
+
+.sidebar-container-pinned {
+  flex: none;
+}
+
 .sidebar-buttons {
   display: flex;
   flex-flow: row wrap;
@@ -61,4 +86,15 @@
 
 .sidebar-pin-btn-clicked {
   transform: rotate(90deg);
+}
+
+//////////////////////////////////////////////////////
+// Animation
+
+.sidebar-container.ng-hide-add {
+  animation: 0.5s slideOutLeft ease;
+}
+
+.sidebar-container.ng-hide-remove {
+  animation: 0.5s slideInLeft ease;
 }

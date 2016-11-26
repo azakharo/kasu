@@ -1,14 +1,6 @@
 .main-container.vw100.vh100
   // Sidebar
-  .sidebar-container.h100(ng-show="showSidebar", ng-class="isSidebarPinned ? 'sidebar-container-pinned' : 'sidebar-container-unpinned'")
-    .sidebar-buttons.p1
-      button.btn.btn-default.sidebar-btn(ng-click="onSidebarToggleClick()")
-        i.fa.fa-bars
-      button.btn.btn-default.sidebar-btn(ng-click="onSidebarPinBtnClick()")
-        i.fa.fa-thumb-tack(ng-class="{'sidebar-pin-btn-clicked': isSidebarPinned}")
-    ul.sidebar-nav
-      li(ng-repeat="item in sidebarItems")
-        a(ui-sref='{{item.state}}', ui-sref-active="active", ng-click="onSidebarItemClick()") {{item.title}}
+  sidebar(menu-items="sidebarItems", on-menu-item-click="onSidebarItemClick()")
   // Main content area
   .content-container.h100
     nav.navbar.navbar-default.my-navbar
@@ -23,7 +15,7 @@
             span.icon-bar
           .navbar-sidebar-toggle-container
             button.navbar-sidebar-toggler.btn.btn-default.responsive-btn.mr2(ng-click="onSidebarToggleClick()",
-            ng-hide="showSidebar")
+            ng-hide="isSidebarShown")
               i.fa.fa-bars
           a.navbar-brand(href='http://sarov-itc.ru/', target="_blank")
             img(src="assets/images/logo.png", alt="лого")
