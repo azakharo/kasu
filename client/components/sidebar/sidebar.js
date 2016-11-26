@@ -1,14 +1,6 @@
 'use strict';
 
-angular.module('projectsApp')
-  .component('sidebar', {
-    templateUrl: 'components/sidebar/sidebar.html',
-    controller: 'SidebarCtrl',
-    bindings: {
-      menuItems: '=',
-      onMenuItemClick: '&'
-    }
-  })
+angular.module('gitlabSidebar', [])
   .controller('SidebarCtrl', function ($rootScope, $timeout) {
     this.rootScope = $rootScope;
     this.isPinned = false;
@@ -36,4 +28,12 @@ angular.module('projectsApp')
       $('.sidebar-container').addClass('activated');
     }, 500);
 
+  })
+  .component('sidebar', {
+    templateUrl: 'components/sidebar/sidebar.html',
+    controller: 'SidebarCtrl',
+    bindings: {
+      menuItems: '=',
+      onMenuItemClick: '&'
+    }
   });

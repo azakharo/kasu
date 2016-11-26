@@ -8,7 +8,8 @@ angular.module('projectsApp', [
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
-  'angularSpinner'
+  'angularSpinner',
+  'gitlabSidebar'
 ])
   .config(function ($locationProvider, $httpProvider) {
     $locationProvider.html5Mode(true);
