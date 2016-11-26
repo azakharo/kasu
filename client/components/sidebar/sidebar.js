@@ -9,7 +9,7 @@ angular.module('projectsApp')
       onMenuItemClick: '&'
     }
   })
-  .controller('SidebarCtrl', function ($rootScope) {
+  .controller('SidebarCtrl', function ($rootScope, $timeout) {
     this.rootScope = $rootScope;
     this.isPinned = false;
 
@@ -30,5 +30,10 @@ angular.module('projectsApp')
         $rootScope.isSidebarShown = false;
       }
     };
+
+    // Wark-around issue with sidebar flickering at startup
+    $timeout(function () {
+      $('.sidebar-container').addClass('activated');
+    }, 500);
 
   });
