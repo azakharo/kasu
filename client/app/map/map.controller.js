@@ -104,6 +104,7 @@ angular.module('projectsApp')
       loadLayers(mymap, layersCtrl);
 
       addAddLayerButton(mymap);
+      addClearLayersButton(mymap);
     }
 
 
@@ -111,14 +112,16 @@ angular.module('projectsApp')
     // GeoJSON layers
 
     let allLayersData = [];
+    let layerName2layer = {};
     function loadLayers(map, layersCtrl) {
       //log('create layers');
       $http.get('/api/layers').success(
         function (layersData) {
+          allLayersData = layersData;
           _.forEach(layersData, function (data) {
             const name = data.name;
             const geojson = JSON.parse(data.geojson);
-            addLayer(name, geojson, map, layersCtrl);
+            addLayer(name, geojson, map, layersCtrl, layerName2layer);
           });
           socket.syncUpdates('layer', allLayersData, onLayersDataChanged);
         }
@@ -131,11 +134,14 @@ angular.module('projectsApp')
     function onLayersDataChanged(event, item, array) {
       if (event === 'created') {
         let geoJson = JSON.parse(item.geojson);
-        addLayer(item.name, geoJson, mymap, layersCtrl);
+        addLayer(item.name, geoJson, mymap, layersCtrl, layerName2layer);
+      }
+      else if (event === 'deleted') {
+        removeLayer(item, mymap, layersCtrl, layerName2layer);
       }
     }
 
-    function addLayer(name, geojson, map, layersCtrl) {
+    function addLayer(name, geojson, map, layersCtrl, name2layer) {
       let layer = L.geoJSON(geojson, {
         onEachFeature: function (feature, layer) {
           layer.bindPopup("<i>" + feature.properties.name + "</i>");
@@ -151,6 +157,16 @@ angular.module('projectsApp')
       });
       layer.addTo(map);
       layersCtrl.addOverlay(layer, name);
+      name2layer[name] = layer;
+    }
+
+    function removeLayer(layerData, map, layersCtrl, layerName2layer) {
+      let layer = layerName2layer[layerData.name];
+      if (layer) {
+        layersCtrl.removeLayer(layer);
+        mymap.removeLayer(layer);
+        delete layerName2layer[layerData.name];
+      }
     }
 
     $scope.$on('$destroy', function () {
@@ -162,7 +178,7 @@ angular.module('projectsApp')
       let ctrl = L.control({position: 'bottomright'});
 
       ctrl.onAdd = function () {
-        this._div = L.DomUtil.create('div', 'addlayer'); // create a div with a class "info"
+        this._div = L.DomUtil.create('div', 'addlayer');
         this._div.innerHTML = '<button id="add-layer-btn" class="btn btn-default">Добавить слой</button>';
         return this._div;
       };
@@ -170,7 +186,7 @@ angular.module('projectsApp')
       ctrl.addTo(mymap);
 
       // Add button click handler
-      $( "#add-layer-btn").click(function() {
+      $("#add-layer-btn").click(function() {
         let geojson = genGeoJson();
 
         let curDt = moment().format(DATETIME_FRMT);
@@ -180,6 +196,27 @@ angular.module('projectsApp')
         $http.post('/api/layers', {
           name: layerName,
           geojson: geoJsonStr
+        });
+      });
+    }
+
+    function addClearLayersButton(map) {
+      let ctrl = L.control({position: 'bottomright'});
+
+      ctrl.onAdd = function () {
+        this._div = L.DomUtil.create('div');
+        this._div.innerHTML = '<button id="clear-layers-btn" class="btn btn-default">Очистить</button>';
+        return this._div;
+      };
+
+      ctrl.addTo(mymap);
+
+      // Add button click handler
+      $("#clear-layers-btn").click(function() {
+        _.forEach(allLayersData, function (layData) {
+          if (layData.name !== 'Тревожные события' && layData.name !== 'Криминальные зоны') {
+            $http.delete('/api/layers/' + layData._id);
+          }
         });
       });
     }
