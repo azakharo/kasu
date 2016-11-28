@@ -112,16 +112,17 @@ angular.module('projectsApp')
     // GeoJSON layers
 
     let allLayersData = [];
-    let layerName2layer = {};
+    let id2layer = {};
     function loadLayers(map, layersCtrl) {
       //log('create layers');
       $http.get('/api/layers').success(
         function (layersData) {
           allLayersData = layersData;
           _.forEach(layersData, function (data) {
+            const layerId = data.id;
             const name = data.name;
             const geojson = JSON.parse(data.geojson);
-            addLayer(name, geojson, map, layersCtrl, layerName2layer);
+            addLayer(name, layerId, geojson, map, layersCtrl, id2layer);
           });
           socket.syncUpdates('layer', allLayersData, onLayersDataChanged);
         }
@@ -134,14 +135,14 @@ angular.module('projectsApp')
     function onLayersDataChanged(event, item, array) {
       if (event === 'created') {
         let geoJson = JSON.parse(item.geojson);
-        addLayer(item.name, geoJson, mymap, layersCtrl, layerName2layer);
+        addLayer(item.name, item.id, geoJson, mymap, layersCtrl, id2layer);
       }
       else if (event === 'deleted') {
-        removeLayer(item, mymap, layersCtrl, layerName2layer);
+        removeLayer(item, mymap, layersCtrl, id2layer);
       }
     }
 
-    function addLayer(name, geojson, map, layersCtrl, name2layer) {
+    function addLayer(name, layerId, geojson, map, layersCtrl, id2layer) {
       let layer = L.geoJSON(geojson, {
         onEachFeature: function (feature, layer) {
           layer.bindPopup("<i>" + feature.properties.name + "</i>");
@@ -157,15 +158,15 @@ angular.module('projectsApp')
       });
       layer.addTo(map);
       layersCtrl.addOverlay(layer, name);
-      name2layer[name] = layer;
+      id2layer[layerId] = layer;
     }
 
-    function removeLayer(layerData, map, layersCtrl, layerName2layer) {
-      let layer = layerName2layer[layerData.name];
+    function removeLayer(layerData, map, layersCtrl, id2layer) {
+      let layer = id2layer[layerData.id];
       if (layer) {
         layersCtrl.removeLayer(layer);
         mymap.removeLayer(layer);
-        delete layerName2layer[layerData.name];
+        delete id2layer[layerData.id];
       }
     }
 
@@ -189,14 +190,21 @@ angular.module('projectsApp')
       $("#add-layer-btn").click(function() {
         let geojson = genGeoJson();
 
-        let curDt = moment().format(DATETIME_FRMT);
-        let layerName = `Слой ${curDt}`;
+        let layerName = `Слой ${moment().format(DATETIME_FRMT)}`;
         let geoJsonStr = JSON.stringify(geojson, null, 2);
 
         $http.post('/api/layers', {
+          id: generateGuid(),
           name: layerName,
           geojson: geoJsonStr
         });
+      });
+    }
+
+    function generateGuid() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+        return v.toString(16);
       });
     }
 

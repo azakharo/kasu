@@ -51,6 +51,7 @@ User.find({}).remove(function() {
 
 Layer.find({}).remove(function() {
   Layer.create({
+    id: '1',
     name : 'Тревожные события',
     geojson: '\
     [\
@@ -86,6 +87,7 @@ Layer.find({}).remove(function() {
       }\
     ]'
   }, {
+    id: '2',
     name : 'Криминальные зоны',
     geojson : '\
     [\
