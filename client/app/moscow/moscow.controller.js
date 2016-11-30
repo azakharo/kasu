@@ -106,8 +106,8 @@ angular.module('projectsApp')
             addLayer(layInf.name, geojson, layInf.fillColor, map, layersCtrl);
             localStorageService.set(layInf.geoJsonFname, geojson);
             if (layIndex === LAYER_INFOS.length - 1) {
-              $rootScope.isGettingData = false;
               localStorageService.set(STORE_KEY__LAYERS_LOADED, true);
+              $rootScope.isGettingData = false;
             }
           }
         );
