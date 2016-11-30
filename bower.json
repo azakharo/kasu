@@ -18,7 +18,8 @@
     "angular-animate": "^1.5.8",
     "animate.css": "^3.5.2",
     "moment": "^2.16.0",
-    "angular-spinner": "^0.8.1"
+    "angular-spinner": "^0.8.1",
+    "angular-local-storage": "^0.5.2"
   },
   "devDependencies": {
     "angular-mocks": "1.5.8",

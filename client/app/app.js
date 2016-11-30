@@ -9,6 +9,7 @@ angular.module('projectsApp', [
   'ui.router',
   'ui.bootstrap',
   'angularSpinner',
+  'LocalStorageModule',
   'gitlabSidebar'
 ])
   .config(function ($locationProvider, $httpProvider) {
@@ -30,6 +31,8 @@ angular.module('projectsApp', [
       }
     };
   })
+
+  .config(localStorageServiceProvider => localStorageServiceProvider.setPrefix('kasu'))
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
     return {

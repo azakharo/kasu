@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('projectsApp')
-  .controller('MoscowCtrl', function ($scope, $rootScope, $timeout, $http) {
-    //*******************************************
-    // Start up code
+  .controller('MoscowCtrl', function ($scope, $rootScope, $timeout, $http, localStorageService) {
+    ///////////////////////////////////////////////////////
+    // Declarations
 
     let mymap = null;
     let layersCtrl = null;
@@ -13,9 +13,30 @@ angular.module('projectsApp')
     };
     const DEFAULT_ZOOM = 11;
 
+    const STORE_KEY__LAYERS_LOADED = "layers_loaded";
+
+    const LAYER_INFOS = [
+      {
+        name: 'Административные округа',
+        geoJsonFname: 'ao.geojson',
+        fillColor: "#ff7800"
+      },
+      {
+        name: 'Муниципальные образования',
+        geoJsonFname: 'mo.geojson',
+        fillColor: "#ff78a0"
+      }
+    ];
+
+    // Declarations
+    ///////////////////////////////////////////////////////
+
+
+    //*******************************************
+    // Start up code
+
     drawMap(DEFAULT_LOCATION);
 
-    // Start up code
     //*******************************************
 
 
@@ -66,39 +87,39 @@ angular.module('projectsApp')
         mymap.invalidateSize();
       }, 100);
 
-      loadLayers(mymap, layersCtrl);
+      if (localStorageService.get(STORE_KEY__LAYERS_LOADED)) {
+        loadLayersFromLocalStorage(mymap, layersCtrl);
+      }
+      else {
+        loadLayersFromBackend(mymap, layersCtrl);
+      }
     }
 
 
     //===========================================
     // GeoJSON layers
 
-    function loadLayers(map, layersCtrl) {
-      //log('load layers');
-
-      const layerInfos = [
-        {
-          name: 'Административные округа',
-          geoJsonFname: 'ao.geojson',
-          fillColor: "#ff7800"
-        },
-        {
-          name: 'Муниципальные образования',
-          geoJsonFname: 'mo.geojson',
-          fillColor: "#ff78a0"
-        }
-      ];
-
-      _.forEach(layerInfos, function (layInf, layIndex) {
+    function loadLayersFromBackend(map, layersCtrl) {
+      _.forEach(LAYER_INFOS, function (layInf, layIndex) {
         $http.get(`/assets/geojson/${layInf.geoJsonFname}`).success(
           function (geojson) {
             addLayer(layInf.name, geojson, layInf.fillColor, map, layersCtrl);
-            if (layIndex === layerInfos.length - 1) {
+            localStorageService.set(layInf.geoJsonFname, geojson);
+            if (layIndex === LAYER_INFOS.length - 1) {
               $rootScope.isGettingData = false;
+              localStorageService.set(STORE_KEY__LAYERS_LOADED, true);
             }
           }
         );
       });
+    }
+
+    function loadLayersFromLocalStorage(map, layersCtrl) {
+      _.forEach(LAYER_INFOS, function (layInf, layIndex) {
+        let geojson = localStorageService.get(layInf.geoJsonFname);
+        addLayer(layInf.name, geojson, layInf.fillColor, map, layersCtrl);
+      });
+      $rootScope.isGettingData = false;
     }
 
     function addLayer(name, geojson, fillColor, map, layersCtrl) {
